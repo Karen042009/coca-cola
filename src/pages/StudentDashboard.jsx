@@ -1,7 +1,6 @@
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { CheckCircle2, Lock, Timer, GitMerge, ChevronLeft } from "lucide-react";
-import { useAppContext } from "../context/AppContext";
 import { useLanguage } from "../context/LanguageContext";
 import { translations, t } from "../i18n/translations";
 

@@ -240,7 +240,7 @@ export const getTopicContent = (topicId) => {
   };
 
   // Generic Fallback algorithm mapping for any topicId not explicity defined
-  const getGenericContent = (topicId) => {
+  const getGenericContent = () => {
      return {
       theoryTitle: "Առաջադեմ Ուսումնասիրություն",
       theoryText: "Այս թեման (մինչև պաշտոնական թողարկումը) AI համակարգի կողմից ենթադրում է բաց հետազոտություն և տեսական վերլուծություն: Ուսանողը պետք է կարդա կցված մուլտիմեդիա նյութերը և նախապատրաստվի բանավոր պաշտպանությանը:",
@@ -274,5 +274,5 @@ export const getTopicContent = (topicId) => {
   if (normalizedTopic.includes('phys')) return content.dynamics;
   if (normalizedTopic.includes('bio') || normalizedTopic.includes('gen')) return content.genetics;
   
-  return Object.keys(content).includes(topicId) ? content[topicId] : getGenericContent(topicId);
+  return Object.keys(content).includes(topicId) ? content[topicId] : getGenericContent();
 }

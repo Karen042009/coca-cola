@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components -- context + hook pattern */
 import React, { createContext, useContext, useState } from 'react';
 
 const LanguageContext = createContext();

@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { Send, Book, MessageSquare, Bot, User } from 'lucide-react';
 import { useAppContext } from "../context/AppContext";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { getTopicContent } from '../data/mockContent';
 import { useLanguage } from '../context/LanguageContext';
 import { translations, t } from '../i18n/translations';
 
 export default function SocraticRoom() {
-  const navigate = useNavigate();
   const { chatMessages: messages, setChatMessages: setMessages, setShowVoiceModal } = useAppContext();
   const { lang } = useLanguage();
   const [inputText, setInputText] = useState('');

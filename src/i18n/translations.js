@@ -224,7 +224,7 @@ export const translations = {
     level:       { hy: 'Маkertak', en: 'Level', ru: 'Уровень' },
     xp:          { hy: 'XP', en: 'XP', ru: 'XP' },
     streak:      { hy: 'оров серия', en: 'day streak', ru: 'дн. серия' },
-    knowledge:   { hy: 'Gitеlikі цар', en: 'Knowledge Tree', en: 'Дерево знаний' },
+    knowledge:   { hy: 'Gitеlikі цар', en: 'Knowledge Tree', ru: 'Дерево знаний' },
     theory:      { hy: 'Теория', en: 'Theory', ru: 'Теория' },
     practice:    { hy: 'Практика', en: 'Practice', ru: 'Практика' },
     socratic:    { hy: 'Sokratesyan', en: 'Socratic', ru: 'Сократов' },

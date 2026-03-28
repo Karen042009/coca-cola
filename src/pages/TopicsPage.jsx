@@ -28,25 +28,25 @@ export default function TopicsPage() {
       </div>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-        {subject.topics.map(t => (
+        {subject.topics.map((topicRow) => (
           <div
-            key={t.id}
+            key={topicRow.id}
             className="glass-panel"
             style={{
               padding: '20px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
-              opacity: t.locked ? 0.5 : 1,
-              borderLeft: t.locked ? '4px solid var(--surface-border)' : '4px solid var(--primary)',
-              cursor: t.locked ? 'not-allowed' : 'pointer',
+              opacity: topicRow.locked ? 0.5 : 1,
+              borderLeft: topicRow.locked ? '4px solid var(--surface-border)' : '4px solid var(--primary)',
+              cursor: topicRow.locked ? 'not-allowed' : 'pointer',
               transition: '0.3s'
             }}
             onClick={() => {
-              if (!t.locked) navigate(`/student/${subjectId}/${t.id}`);
+              if (!topicRow.locked) navigate(`/student/${subjectId}/${topicRow.id}`);
             }}
             onMouseOver={(e) => {
-              if (!t.locked) {
+              if (!topicRow.locked) {
                  e.currentTarget.style.background = 'rgba(255,255,255,0.08)';
               }
             }}
@@ -56,22 +56,22 @@ export default function TopicsPage() {
           >
             <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
                <div style={{ background: 'rgba(255,255,255,0.05)', padding: '12px', borderRadius: '12px' }}>
-                 <GitMerge size={24} color={t.locked ? 'var(--text-muted)' : 'var(--primary)'}/>
+                 <GitMerge size={24} color={topicRow.locked ? 'var(--text-muted)' : 'var(--primary)'}/>
                </div>
                <div>
-                 <h3 style={{ fontSize: '1.2rem', margin: '0 0 4px 0' }}>{t.title}</h3>
+                 <h3 style={{ fontSize: '1.2rem', margin: '0 0 4px 0' }}>{topicRow.title}</h3>
                  <div style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>
-                   {t(translations.topics.madeOf, lang)} {t.modules || 4} {t(translations.topics.modules, lang)}
+                   {t(translations.topics.madeOf, lang)} {topicRow.modules || 4} {t(translations.topics.modules, lang)}
                  </div>
                </div>
             </div>
             
             <div style={{ width: '150px', textAlign: 'right' }}>
                <div style={{ fontSize: '0.85rem', marginBottom: '6px', color: 'var(--text-muted)' }}>
-                 {t.locked ? t(translations.topics.locked, lang) : `${t(translations.topics.progress, lang)}՝ ${t.prg}%`}
+                 {topicRow.locked ? t(translations.topics.locked, lang) : `${t(translations.topics.progress, lang)}՝ ${topicRow.prg}%`}
                </div>
                <div style={{ height: '6px', borderRadius: '99px', background: 'rgba(255,255,255,0.1)' }}>
-                  <div style={{ width: `${t.prg}%`, height: '100%', borderRadius: '99px', background: 'linear-gradient(90deg, var(--primary), var(--secondary))' }}></div>
+                  <div style={{ width: `${topicRow.prg}%`, height: '100%', borderRadius: '99px', background: 'linear-gradient(90deg, var(--primary), var(--secondary))' }}></div>
                </div>
             </div>
           </div>
