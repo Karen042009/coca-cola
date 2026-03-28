@@ -1,76 +1,13 @@
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ChevronLeft, Maximize2, GitMerge } from 'lucide-react';
+import { subjectsData } from '../data/topicsData';
 
 export default function TopicsPage() {
   const navigate = useNavigate();
   const { subjectId } = useParams();
 
-  // Mock data for topics
-  const data = {
-    physics: {
-      title: 'Ֆիզիկա',
-      topics: [
-        { id: 'kinematics', title: '1. Կինեմատիկա. Արագություն և արագացում', prg: 100, locked: false, modules: 4 },
-        { id: 'dynamics', title: '2. Դինամիկա (Նյուտոնի օրենքներ)', prg: 45, locked: false, modules: 4 },
-        { id: 'work_energy', title: '3. Աշխատանք, հզորություն և էներգիա', prg: 20, locked: false, modules: 5 },
-        { id: 'molecular', title: '4. Մոլեկուլային ֆիզիկա, Գազերի օրենքներ', prg: 0, locked: true, modules: 3 },
-        { id: 'thermo', title: '5. Ջերմադինամիկայի հիմունքներ', prg: 0, locked: true, modules: 5 },
-        { id: 'electrostatics', title: '6. Էլեկտրաստատիկա', prg: 0, locked: true, modules: 4 },
-        { id: 'dc_current', title: '7. Հաստատուն էլեկտրական հոսանք', prg: 0, locked: true, modules: 6 },
-        { id: 'magnetism', title: '8. Մագնիսական դաշտ և ինդուկցիա', prg: 0, locked: true, modules: 5 },
-        { id: 'optics', title: '9. Օպտիկա. Լույսի անդրադարձում', prg: 0, locked: true, modules: 3 },
-        { id: 'quantum', title: '10. Քվանտային և Միջուկային ֆիզիկայի տարրեր', prg: 0, locked: true, modules: 4 }
-      ]
-    },
-    math: {
-      title: 'Մաթեմատիկա',
-      topics: [
-        { id: 'algebra', title: '1. Հանրահաշիվ. Հավասարումներ', prg: 80, locked: false, modules: 3 },
-        { id: 'functions', title: '2. Ֆունկցիաներ և գրաֆիկներ', prg: 65, locked: false, modules: 5 },
-        { id: 'geometry', title: '3. Երկրաչափություն. Եռանկյուններ', prg: 20, locked: false, modules: 4 },
-        { id: 'polygons', title: '4. Քառանկյուններ և Բազմանկյուններ', prg: 10, locked: false, modules: 4 },
-        { id: 'circle', title: '5. Շրջանագիծ և Շրջան', prg: 0, locked: true, modules: 5 },
-        { id: 'trig', title: '6. Եռանկյունաչափություն', prg: 0, locked: true, modules: 6 },
-        { id: 'solid_geometry', title: '7. Տարածաչափություն. Մարմինների մակերևույթներ', prg: 0, locked: true, modules: 5 },
-        { id: 'vectors', title: '8. Վեկտորական հանրահաշիվ', prg: 0, locked: true, modules: 4 },
-        { id: 'probability', title: '9. Հավանականություն և վիճակագրություն', prg: 0, locked: true, modules: 3 },
-        { id: 'calculus', title: '10. Մաթ. Անալիզ (Ածանցյալ)', prg: 0, locked: true, modules: 7 },
-      ]
-    },
-    biology: {
-      title: 'Կենսաբանություն',
-      topics: [
-        { id: 'cell', title: '1. Բջջաբանության հիմունքներ', prg: 100, locked: false, modules: 4 },
-        { id: 'genetics', title: '2. Գենետիկա և ժառանգականություն', prg: 10, locked: false, modules: 5 },
-        { id: 'selection', title: '3. Սելեկցիա և կենսատեխնոլոգիա', prg: 0, locked: true, modules: 4 },
-        { id: 'anatomy_bones', title: '4. Մարդու Անատոմիա. Ոսկրային համակարգ', prg: 0, locked: true, modules: 3 },
-        { id: 'anatomy_neuro', title: '5. Նյարդային համակարգ', prg: 0, locked: true, modules: 6 },
-        { id: 'anatomy_digestion', title: '6. Մարսողական համակարգ', prg: 0, locked: true, modules: 5 },
-        { id: 'botany', title: '7. Բույսերի կառուցվածք', prg: 0, locked: true, modules: 5 },
-        { id: 'zoology', title: '8. Կենդանաբանության հիմունքներ', prg: 0, locked: true, modules: 4 },
-        { id: 'ecology', title: '9. Էկոլոգիա և բնապահպանություն', prg: 0, locked: true, modules: 4 },
-        { id: 'evolution', title: '10. Էվոլյուցիոն տեսություն', prg: 0, locked: true, modules: 3 },
-      ]
-    },
-    chemistry: {
-      title: 'Քիմիա',
-      topics: [
-        { id: 'atoms', title: '1. Ատոմի կառուցվածք և Պարբերական համակարգ', prg: 75, locked: false, modules: 4 },
-        { id: 'bonds', title: '2. Քիմիական կապեր', prg: 30, locked: false, modules: 3 },
-        { id: 'inorganic', title: '3. Անօրգանական միացությունների դասեր', prg: 15, locked: false, modules: 4 },
-        { id: 'redox', title: '4. Օքսիդավերականգնման ռեակցիաներ', prg: 0, locked: true, modules: 5 },
-        { id: 'kinetics', title: '5. Ռեակցիայի արագություն և հավասարակշռություն', prg: 0, locked: true, modules: 4 },
-        { id: 'electrolysis', title: '6. Էլեկտրոլիտային դիսոցում', prg: 0, locked: true, modules: 5 },
-        { id: 'non_metals', title: '7. Ոչ մետաղների քիմիա', prg: 0, locked: true, modules: 5 },
-        { id: 'metals', title: '8. Մետաղների քիմիա', prg: 0, locked: true, modules: 6 },
-        { id: 'organic', title: '9. Օրգանական քիմիա. Ալկաններ և Ալկեններ', prg: 0, locked: true, modules: 6 },
-        { id: 'bio_chem', title: '10. Սպիտակուցներ և Ածխաջրեր', prg: 0, locked: true, modules: 4 },
-      ]
-    }
-  };
-
-  const subject = data[subjectId] || data.physics;
+  const subject = subjectsData[subjectId] || subjectsData.physics;
 
   return (
     <div className="animate-fade-in" style={{ padding: '20px', maxWidth: '900px', margin: '0 auto' }}>
