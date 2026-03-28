@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import TopNav from './components/TopNav';
 import LandingPage from './pages/LandingPage';
 import SubjectsPage from './pages/SubjectsPage';
@@ -15,12 +15,13 @@ import { useAppContext } from './context/AppContext';
 
 export default function App() {
   const { showVoiceModal, setShowVoiceModal, voiceValidated, handleValidationSuccess } = useAppContext();
+  const location = useLocation();
 
   return (
     <>
       <TopNav />
       
-      <main className={window.location.pathname === '/' ? "" : "container"} style={window.location.pathname === '/' ? {} : { paddingTop: '100px', paddingBottom: '60px' }}>
+      <main className={location.pathname === '/' ? "" : "container"} style={location.pathname === '/' ? {} : { paddingTop: '100px', paddingBottom: '60px' }}>
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/student" element={<SubjectsPage />} />
