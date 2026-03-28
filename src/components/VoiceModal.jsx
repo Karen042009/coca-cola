@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Mic, X, Activity, CheckCircle, ArrowRight } from 'lucide-react';
+import { getTopicContent } from '../data/mockContent';
 
 export default function VoiceModal({ onClose, onSuccess, validated }) {
   const [recording, setRecording] = useState(false);
@@ -11,13 +12,15 @@ export default function VoiceModal({ onClose, onSuccess, validated }) {
   const typingIntervalRef = useRef(null);
   const navigate = useNavigate();
 
+  const topicId = window.location.pathname.split('/').pop() || 'dynamics';
+  const content = getTopicContent(topicId);
+
   const handleStartRecording = () => {
     setRecording(true);
     setAnalyzing(false);
     setTranscript('');
 
-    const fullTranscript =
-      '«Երբ զանգվածը նույնն է, իսկ ուժը մեծանում է, մեքենայի արագացումը մեծանում է։ Այսինքն մեքենան ավելի արագ է արագանում։»';
+    const fullTranscript = content.voiceAnswerText;
 
     if (recordingTimeoutRef.current) clearTimeout(recordingTimeoutRef.current);
     if (typingIntervalRef.current) clearInterval(typingIntervalRef.current);
@@ -85,7 +88,7 @@ export default function VoiceModal({ onClose, onSuccess, validated }) {
         </h2>
 
         <div style={{ background: 'rgba(255,255,255,0.05)', padding: '24px', borderRadius: '16px', textAlign: 'center', fontSize: '1.2rem', marginBottom: '40px', borderLeft: '4px solid var(--primary)' }}>
-          <b style={{ color: 'var(--primary)' }}>AI-ի հարցը:</b> «Քո բառերով բացատրիր, խնդրեմ, ի՞նչ է տեղի ունենում մեքենայի հետ, երբ նրա վրա ազդող ուժը մեծանում է, իսկ զանգվածը մնում է նույնը։»
+          <b style={{ color: 'var(--primary)' }}>AI-ի հարցը:</b> {content.voicePrompt}
         </div>
 
         {!validated && !analyzing && !recording && (

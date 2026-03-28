@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Send, Book, MessageSquare, Bot, User } from 'lucide-react';
 import { useAppContext } from "../context/AppContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { getTopicContent } from '../data/mockContent';
 
 export default function SocraticRoom() {
   const navigate = useNavigate();
@@ -10,6 +11,15 @@ export default function SocraticRoom() {
   
   const onComplete = () => setShowVoiceModal(true);
   
+  const { topicId } = useParams();
+  const content = getTopicContent(topicId);
+
+  // Initialize the chat dynamically if empty or changed logic
+  React.useEffect(() => {
+    setMessages([{ role: 'assistant', content: content.socraticInitial }]);
+    // eslint-disable-next-line
+  }, [topicId]);
+
   const [isTyping, setIsTyping] = useState(false);
 
   const handleSend = () => {
@@ -25,12 +35,12 @@ export default function SocraticRoom() {
     const text = inputText.toLowerCase();
     let replyText = '';
 
-    if (text.includes('ուժ') || text.includes('զանգված')) {
-      replyText = 'Շատ ապրես։ Կարողացար ճիշտ կապել ուժն ու զանգվածը։ Հիմա մեկ նախադասությամբ բացատրիր՝ ինչու նույն ուժի դեպքում մեծ զանգվածը դժվար է արագացնել։';
+    if (text.includes(content.socraticKeywords.key1) || text.includes(content.socraticKeywords.key2)) {
+      replyText = content.socraticKeywords.successText;
     } else if (text.includes('չգիտեմ') || text.length < 5) {
-      replyText = 'Ոչինչ, արի միասին մտածենք։ Պատկերացրու նույն ուժով կհրես դատարկ և լիքը սայլակները։ Ո՞րն ավելի հեշտ դարձավ արագացնել։';
+      replyText = content.socraticKeywords.failText;
     } else {
-      replyText = 'Հետաքրքիր միտք է։ Բայց արի վերադառնանք Նյուտոնի բանաձևին (F = m · a). ի՞նչ կստացվի, եթե զանգվածը (m) շատ մեծ է։';
+      replyText = content.socraticKeywords.fallback;
     }
 
     // Simulate AI thinking and streaming
@@ -83,13 +93,12 @@ export default function SocraticRoom() {
           border: '1px solid var(--surface-border)',
           lineHeight: '1.8'
         }}>
-          <h3>Նյուտոնի 2-րդ օրենքը</h3>
-          <p style={{ marginTop: '12px', color: '#cbd5e1' }}>Բանաձև՝ <strong style={{ color: 'var(--primary)', fontSize: '1.2rem' }}>F = m · a</strong></p>
-          <ul style={{ marginTop: '16px', color: '#cbd5e1', paddingLeft: '24px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
-            <li>Նույն ուժի դեպքում <b>մեծ զանգվածը</b> ստանում է ավելի <b>փոքր արագացում</b>։</li>
-            <li>Նույն զանգվածի դեպքում <b>ուժի աճը</b> բերում է ավելի <b>մեծ արագացման</b>։</li>
-            <li>Կենցաղային օրինակ՝ դատարկ և լցված սայլակ։</li>
-          </ul>
+          <h3 style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            {content.emoji} {content.theoryTitle}
+          </h3>
+          <p style={{ marginTop: '12px', color: '#cbd5e1' }}>
+            {content.theoryText}
+          </p>
         </div>
 
         <div style={{ marginTop: 'auto', padding: '16px', background: 'rgba(168, 85, 247, 0.1)', borderRadius: '12px', color: '#d8b4fe', border: '1px solid rgba(168, 85, 247, 0.2)' }}>

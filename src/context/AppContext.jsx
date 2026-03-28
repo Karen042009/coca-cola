@@ -11,20 +11,7 @@ export const AppProvider = ({ children }) => {
     action_reaction: 'locked'
   });
   
-  const [chatMessages, setChatMessages] = useState([
-    {
-      role: 'assistant',
-      content: 'Բարև, Արամ։ Տեսությունը կարդալուց հետո, արի քննարկենք։ Պատկերացրու գնում ես սուպերմարկետ: Ո՞ր սայլակն է ավելի դժվար հրել՝ դատա՞րկը, թե՞ մթերքներով լիքը: Եվ ինչո՞ւ։'
-    },
-    {
-      role: 'user',
-      content: 'Մթերքներով լիքը։ Որովհետև մեծ զանգվածի դեպքում իներցիան ավելի մեծ է, դրա համար դժվար է տեղից շարժել։'
-    },
-    {
-      role: 'assistant',
-      content: 'Ճիշտ է։ Իսկ ֆիզիկայի լեզվով այդ "ծանրը" զանգվածն է: Հետևաբար, ինչպե՞ս է կապված զանգվածը նրա հետ, թե որքան ուժ պետք է գործադրես։'
-    }
-  ]);
+  const [chatMessages, setChatMessages] = useState([]);
   
   const [showVoiceModal, setShowVoiceModal] = useState(false);
   const [voiceValidated, setVoiceValidated] = useState(false);
