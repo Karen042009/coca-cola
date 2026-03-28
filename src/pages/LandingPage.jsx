@@ -118,7 +118,6 @@ export default function LandingPage() {
   return (
     <div className="landing-pitch" style={{ 
       width: "100%", 
-      overflowX: "hidden", 
       background: "linear-gradient(135deg, #0a0c1a 0%, #1e1b4b 50%, #2e1065 100%)", 
       color: "#f8fafc",
       position: "relative"
