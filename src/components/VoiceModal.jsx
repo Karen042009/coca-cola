@@ -6,6 +6,7 @@ export default function VoiceModal({ onClose, onSuccess, validated }) {
   const [recording, setRecording] = useState(false);
   const [analyzing, setAnalyzing] = useState(false);
   const [transcript, setTranscript] = useState('');
+  const [noiseFilter, setNoiseFilter] = useState(false); // Active noise cancellation
   const recordingTimeoutRef = useRef(null);
   const typingIntervalRef = useRef(null);
   const navigate = useNavigate();
@@ -103,6 +104,33 @@ export default function VoiceModal({ onClose, onSuccess, validated }) {
                <Mic size={48} color="white" />
              </button>
              <p style={{ fontSize: '1.2rem', color: 'var(--text-main)', fontWeight: '500' }}>Սեղմեք խոսելու համար</p>
+
+             {/* Background Noise Toggle */}
+             <div 
+               style={{ 
+                 marginTop: '16px', padding: '12px 20px', borderRadius: '100px',
+                 background: noiseFilter ? 'rgba(16, 185, 129, 0.15)' : 'rgba(255, 255, 255, 0.05)',
+                 border: `1px solid ${noiseFilter ? 'var(--success)' : 'var(--surface-border)'}`,
+                 display: 'flex', alignItems: 'center', gap: '12px', cursor: 'pointer',
+                 transition: 'all 0.3s'
+               }}
+               onClick={() => setNoiseFilter(!noiseFilter)}
+             >
+                <div style={{
+                  width: '40px', height: '24px', borderRadius: '12px',
+                  background: noiseFilter ? 'var(--success)' : 'rgba(255,255,255,0.2)',
+                  position: 'relative', transition: '0.3s'
+                }}>
+                  <div style={{
+                    position: 'absolute', top: '2px', left: noiseFilter ? '18px' : '2px',
+                    width: '20px', height: '20px', borderRadius: '50%', background: 'white',
+                    transition: '0.3s'
+                  }}></div>
+                </div>
+                <span style={{ color: noiseFilter ? 'var(--success)' : 'var(--text-muted)', fontWeight: 600 }}>
+                  Աղմուկի չեղարկում (AI Denoise Demo)
+                </span>
+             </div>
           </div>
         )}
 

@@ -1,46 +1,20 @@
-import React, { useState } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
 import TopNav from './components/TopNav';
 import LandingPage from './pages/LandingPage';
+import SubjectsPage from './pages/SubjectsPage';
+import TopicsPage from './pages/TopicsPage';
 import StudentDashboard from './pages/StudentDashboard';
 import SocraticRoom from './pages/SocraticRoom';
 import AnalyticsDashboard from './pages/AnalyticsDashboard';
+import TheoryPage from './pages/TheoryPage';
+import PracticePage from './pages/PracticePage';
+import ProfilePage from './pages/ProfilePage';
 import VoiceModal from './components/VoiceModal';
+import { useAppContext } from './context/AppContext';
 
 export default function App() {
-  // Shared Application State
-  const [knowledgeStatus, setKnowledgeStatus] = useState({
-    inertia: 'done',
-    force_mass: 'in_progress',
-    action_reaction: 'locked'
-  });
-  
-  const [chatMessages, setChatMessages] = useState([
-    {
-      role: 'assistant',
-      content: 'Բարև, Արամ։ Տեսությունը կարդալուց հետո, արի քննարկենք։ Պատկերացրու գնում ես սուպերմարկետ: Ո՞ր սայլակն է ավելի դժվար հրել՝ դատա՞րկը, թե՞ մթերքներով լիքը: Եվ ինչո՞ւ։'
-    },
-    {
-      role: 'user',
-      content: 'Մթերքներով լիքը։ Որովհետև մեծ զանգվածի դեպքում իներցիան ավելի մեծ է, դրա համար դժվար է տեղից շարժել։'
-    },
-    {
-      role: 'assistant',
-      content: 'Ճիշտ է։ Իսկ ֆիզիկայի լեզվով այդ "ծանրը" զանգվածն է: Հետևաբար, ինչպե՞ս է կապված զանգվածը նրա հետ, թե որքան ուժ պետք է գործադրես։'
-    }
-  ]);
-  
-  const [showVoiceModal, setShowVoiceModal] = useState(false);
-  const [voiceValidated, setVoiceValidated] = useState(false);
-
-  const handleValidationSuccess = () => {
-    setVoiceValidated(true);
-    setKnowledgeStatus(prev => ({
-      ...prev,
-      force_mass: 'done',
-      action_reaction: 'done' // Unlocks the next one
-    }));
-  };
+  const { showVoiceModal, setShowVoiceModal, voiceValidated, handleValidationSuccess } = useAppContext();
 
   return (
     <>
@@ -49,22 +23,14 @@ export default function App() {
       <main className="container" style={{ paddingTop: '100px', paddingBottom: '60px' }}>
         <Routes>
           <Route path="/" element={<LandingPage />} />
-          <Route
-            path="/student"
-            element={<StudentDashboard status={knowledgeStatus} />}
-          />
-          <Route
-            path="/socratic-room"
-            element={
-              <SocraticRoom
-                messages={chatMessages}
-                setMessages={setChatMessages}
-                onComplete={() => setShowVoiceModal(true)}
-              />
-            }
-          />
+          <Route path="/student" element={<SubjectsPage />} />
+          <Route path="/student/:subjectId" element={<TopicsPage />} />
+          <Route path="/student/:subjectId/:topicId" element={<StudentDashboard />} />
+          <Route path="/theory/:topicId" element={<TheoryPage />} />
+          <Route path="/practice/:topicId" element={<PracticePage />} />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/socratic/:topicId" element={<SocraticRoom />} />
           <Route path="/analytics" element={<AnalyticsDashboard />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>
 

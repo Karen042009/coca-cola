@@ -7,7 +7,7 @@ export default function TopNav() {
   const location = useLocation();
   const path = location.pathname;
 
-  const isStudent = path.startsWith('/student') || path.startsWith('/socratic-room');
+  const isStudent = path.startsWith('/student') || path.startsWith('/socratic');
   const isAnalytics = path.startsWith('/analytics');
 
   return (
@@ -70,6 +70,20 @@ export default function TopNav() {
           >
             <BarChart3 size={18} />
             <span>Անալիտիկա</span>
+          </button>
+          
+          {/* Profile Circle */}
+          <button 
+            onClick={() => navigate('/profile')}
+            style={{ 
+              width: '40px', height: '40px', borderRadius: '50%', border: 'none', cursor: 'pointer',
+              background: 'linear-gradient(135deg, var(--primary), var(--secondary))',
+              display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.2rem',
+              boxShadow: '0 0 15px rgba(99, 102, 241, 0.4)', marginLeft: '8px'
+            }}
+            title="Աշակերտի Պրոֆիլ"
+          >
+            👨‍🎓
           </button>
         </div>
       </div>

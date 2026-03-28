@@ -1,9 +1,20 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
-import { CheckCircle2, Lock, Timer, GitMerge } from "lucide-react";
+import { useNavigate, useParams } from "react-router-dom";
+import { CheckCircle2, Lock, Timer, GitMerge, ChevronLeft } from "lucide-react";
+import { useAppContext } from "../context/AppContext";
 
-export default function StudentDashboard({ status }) {
+export default function StudentDashboard() {
   const navigate = useNavigate();
+  const { subjectId, topicId } = useParams();
+  
+  // Fake state simulation for the topic
+  const status = {
+    theory: "done",
+    practice: "done",
+    socratic: "in_progress",
+    voice: "locked"
+  };
+
   const nodeConfig = {
     done: {
       color: "var(--success)",
@@ -35,13 +46,10 @@ export default function StudentDashboard({ status }) {
   };
 
   const nodes = [
-    { id: "inertia", title: "1) Իներցիա գաղափարը", statusKey: "inertia" },
-    { id: "force_mass", title: "2) Ուժ և զանգված", statusKey: "force_mass" },
-    {
-      id: "action_reaction",
-      title: "3) Ազդեցություն և հակազդեցություն",
-      statusKey: "action_reaction",
-    },
+    { id: "theory", title: "1. Տեսություն (Մուլտիմեդիա)", statusKey: "theory" },
+    { id: "practice", title: "2. Գործնական (Խնդիրներ և պրակտիկա)", statusKey: "practice" },
+    { id: "socratic", title: "3. Սոկրատեսյան Չաթ (AI Օգնական)", statusKey: "socratic" },
+    { id: "voice", title: "4. Բանավոր Պաշտպանություն", statusKey: "voice" }
   ];
 
   return (
@@ -49,45 +57,50 @@ export default function StudentDashboard({ status }) {
       className="animate-fade-in"
       style={{ padding: "20px", maxWidth: "900px", margin: "0 auto" }}
     >
+      <button 
+        className="btn btn-secondary" 
+        onClick={() => navigate(`/student/${subjectId || ''}`)}
+        style={{ padding: '8px 16px', marginBottom: '24px', borderRadius: '100px' }}
+      >
+        <ChevronLeft size={18} /> Թեմաներ
+      </button>
+
       <div style={{ textAlign: "center", marginBottom: "24px" }}>
         <h2 className="text-gradient">Structured Learning Path</h2>
-        <p>Ֆիզիկա • Նյուտոնի օրենքներ</p>
+        <p>Ուսուցման փուլեր • {topicId || 'Ընթացիկ թեմա'}</p>
       </div>
 
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(3, minmax(160px, 1fr))",
+          gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
           gap: "14px",
           marginBottom: "28px",
         }}
       >
         <div
           className="glass-panel"
-          style={{ padding: "14px", borderTop: "3px solid var(--primary)" }}
+          style={{ padding: "18px", borderTop: "3px solid var(--primary)", display: 'flex', alignItems: 'center', gap: '16px' }}
         >
-          <div style={{ color: "var(--text-muted)", fontSize: "0.85rem" }}>
-            Ծրագրի ընդհ. ուսուցիչներ
+          <div style={{ background: 'rgba(99, 102, 241, 0.1)', padding: '12px', borderRadius: '12px' }}>
+             <CheckCircle2 color="var(--primary)" size={28} />
           </div>
-          <div style={{ fontSize: "1.45rem", fontWeight: "bold" }}>18</div>
+          <div>
+            <div style={{ color: "var(--text-muted)", fontSize: "0.85rem" }}>Ընթացիկ մակարդակ</div>
+            <div style={{ fontSize: "1.45rem", fontWeight: "bold" }}>Լեվել 4: <span style={{ color: "var(--primary)" }}>Հետազոտող</span></div>
+          </div>
         </div>
         <div
           className="glass-panel"
-          style={{ padding: "14px", borderTop: "3px solid var(--success)" }}
+          style={{ padding: "18px", borderTop: "3px solid var(--warning)", display: 'flex', alignItems: 'center', gap: '16px' }}
         >
-          <div style={{ color: "var(--text-muted)", fontSize: "0.85rem" }}>
-            Միջին ուսումնառական աճ
+          <div style={{ background: 'rgba(245, 158, 11, 0.1)', padding: '12px', borderRadius: '12px' }}>
+             <Timer color="var(--warning)" size={28} />
           </div>
-          <div style={{ fontSize: "1.45rem", fontWeight: "bold" }}>+27%</div>
-        </div>
-        <div
-          className="glass-panel"
-          style={{ padding: "14px", borderTop: "3px solid var(--secondary)" }}
-        >
-          <div style={{ color: "var(--text-muted)", fontSize: "0.85rem" }}>
-            Չափիչ (Mastery) progreso
+          <div>
+            <div style={{ color: "var(--text-muted)", fontSize: "0.85rem" }}>Դասի Մետաղադրամներ (XP)</div>
+            <div style={{ fontSize: "1.45rem", fontWeight: "bold", color: "var(--warning)" }}>1,250 XP</div>
           </div>
-          <div style={{ fontSize: "1.45rem", fontWeight: "bold" }}>82%</div>
         </div>
       </div>
 
@@ -162,7 +175,7 @@ export default function StudentDashboard({ status }) {
             <React.Fragment key={node.id}>
               {/* Node Card */}
               <div
-                className={`glass-panel ${s.pulse ? "animate-pulse" : ""}`}
+                className={`glass-panel animate-fade-in animate-delay-${(index % 3) + 1} ${s.pulse ? "animate-pulse" : ""}`}
                 style={{
                   width: "100%",
                   display: "flex",
@@ -177,13 +190,26 @@ export default function StudentDashboard({ status }) {
                     ? "0 0 20px rgba(168, 85, 247, 0.4)"
                     : "none",
                   opacity: s.opacity,
+                  position: "relative",
+                  overflow: "hidden"
                 }}
                 onClick={() => {
-                  if (node.statusKey === "force_mass" && isPlayable) {
-                    navigate("/socratic-room");
+                  const isAccessible = status[node.statusKey] === 'in_progress' || status[node.statusKey] === 'done';
+                  
+                  if (node.statusKey === 'socratic' && isAccessible) {
+                    navigate(`/socratic/${topicId || 'dynamics'}`);
+                  } else if (node.statusKey === 'theory' && isAccessible) {
+                    navigate(`/theory/${topicId || 'dynamics'}`);
+                  } else if (node.statusKey === 'practice' && isAccessible) {
+                    navigate(`/practice/${topicId || 'dynamics'}`);
+                  } else if (status[node.statusKey] === "locked") {
+                    alert("Խնդրում ենք նախ ավարտել նախորդ թեման:");
                   }
                 }}
               >
+                {isPlayable && (
+                   <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '2px', background: 'linear-gradient(90deg, transparent, var(--secondary), transparent)', animation: 'pulse-glow 2s infinite' }}></div>
+                )}
                 <div
                   style={{
                     width: "56px",
@@ -215,12 +241,12 @@ export default function StudentDashboard({ status }) {
                   </div>
                 </div>
 
-                {isPlayable && (
+                {(isPlayable || status[node.statusKey] === 'done') && (
                   <button
-                    className="btn btn-primary"
+                    className={`btn ${isPlayable ? 'btn-primary' : 'btn-secondary'}`}
                     style={{ padding: "8px 20px", borderRadius: "100px" }}
                   >
-                    Սկսել սենյակը
+                    {node.statusKey === 'socratic' && isPlayable ? 'Սկսել սենյակը' : isPlayable ? 'Բացել մոդուլը' : 'Կրկնել'}
                   </button>
                 )}
               </div>

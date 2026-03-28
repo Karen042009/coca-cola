@@ -132,6 +132,30 @@ export default function LandingPage() {
         className="animate-fade-in animate-delay-4"
         style={{ marginTop: "80px", maxWidth: "1000px", width: "100%" }}
       >
+        <h2 style={{ marginBottom: "18px" }}>⚙️ Ինչպես է աշխատում համակարգը</h2>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '20px', textAlign: 'left' }}>
+           <div className="glass-panel" style={{ padding: '24px' }}>
+             <div style={{ fontSize: '2rem', marginBottom: '16px' }}>📚</div>
+             <h3 style={{ fontSize: '1.2rem', marginBottom: '8px' }}>1. Տեսություն և Պրակտիկա</h3>
+             <p style={{ color: 'var(--text-muted)' }}>Անհատականացված մուլտիմեդիա դասեր և ինտերակտիվ վարժություններ՝ հարմարեցված աշակերտի տեմպին։</p>
+           </div>
+           <div className="glass-panel" style={{ padding: '24px' }}>
+             <div style={{ fontSize: '2rem', marginBottom: '16px' }}>🤖</div>
+             <h3 style={{ fontSize: '1.2rem', marginBottom: '8px' }}>2. Սոկրատեսյան AI</h3>
+             <p style={{ color: 'var(--text-muted)' }}>Խելացի բոտ, որը չի տալիս պատրաստի պատասխաններ, այլ հարցերի միջոցով ստիպում է մտածել ու տրամաբանել։</p>
+           </div>
+           <div className="glass-panel" style={{ padding: '24px' }}>
+             <div style={{ fontSize: '2rem', marginBottom: '16px' }}>🎤</div>
+             <h3 style={{ fontSize: '1.2rem', marginBottom: '8px' }}>3. Բանավոր Տեստավորում</h3>
+             <p style={{ color: 'var(--text-muted)' }}>AI-ի կողմից իրական ժամանակում իրագործվող բանավոր պաշտպանություն (Speech-to-Text վերլուծություն)։</p>
+           </div>
+        </div>
+      </section>
+
+      <section
+        className="animate-fade-in animate-delay-4"
+        style={{ marginTop: "80px", maxWidth: "1000px", width: "100%" }}
+      >
         <h2 style={{ marginBottom: "18px" }}>🚀 Ինչու հիմա Mentoria AI</h2>
         <div style={{ display: "grid", gap: "14px" }}>
           <div
@@ -289,6 +313,19 @@ export default function LandingPage() {
         >
           <b>Ցուցիչ</b>: Ապրանքն արդեն 30% ավելացրել է պոտենցիալ ուսումնական
           retention-ը, և ១.٣x արագացնում է conceptual mastery-ն.
+        </div>
+      </section>
+
+      <section
+        className="animate-fade-in animate-delay-6"
+        style={{ marginTop: "60px", padding: '40px', background: 'rgba(255,255,255,0.02)', borderRadius: '24px', border: '1px solid var(--surface-border)', width: "100%", maxWidth: "1000px" }}
+      >
+        <h2 style={{ marginBottom: "24px", fontSize: '1.5rem', color: 'var(--text-muted)' }}>Վստահելի Գործընկերներ և Տեխնոլոգիաներ</h2>
+        <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', flexWrap: 'wrap', gap: '32px', opacity: 0.6, filter: 'grayscale(100%)' }}>
+          <div style={{ fontSize: '1.5rem', fontWeight: 800 }}>OpenAI</div>
+          <div style={{ fontSize: '1.5rem', fontWeight: 800 }}>Google Cloud</div>
+          <div style={{ fontSize: '1.5rem', fontWeight: 800 }}>Vite + React</div>
+          <div style={{ fontSize: '1.5rem', fontWeight: 800 }}>Web Speech API</div>
         </div>
       </section>
     </div>

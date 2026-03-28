@@ -1,9 +1,17 @@
 import React, { useState } from 'react';
 import { Send, Book, MessageSquare, Bot, User } from 'lucide-react';
+import { useAppContext } from "../context/AppContext";
+import { useNavigate } from "react-router-dom";
 
-export default function SocraticRoom({ messages, setMessages, onComplete }) {
+export default function SocraticRoom() {
+  const navigate = useNavigate();
+  const { chatMessages: messages, setChatMessages: setMessages, setShowVoiceModal } = useAppContext();
   const [inputText, setInputText] = useState('');
   
+  const onComplete = () => setShowVoiceModal(true);
+  
+  const [isTyping, setIsTyping] = useState(false);
+
   const handleSend = () => {
     if (!inputText.trim()) return;
     
@@ -11,17 +19,50 @@ export default function SocraticRoom({ messages, setMessages, onComplete }) {
     const newMsgs = [...messages, { role: 'user', content: inputText }];
     setMessages(newMsgs);
     setInputText('');
+    setIsTyping(true);
     
-    // Simulate AI thinking and follow-up
+    // Simple Keyword check to show "functionality"
+    const text = inputText.toLowerCase();
+    let replyText = '';
+
+    if (text.includes('ուժ') || text.includes('զանգված')) {
+      replyText = 'Շատ ապրես։ Կարողացար ճիշտ կապել ուժն ու զանգվածը։ Հիմա մեկ նախադասությամբ բացատրիր՝ ինչու նույն ուժի դեպքում մեծ զանգվածը դժվար է արագացնել։';
+    } else if (text.includes('չգիտեմ') || text.length < 5) {
+      replyText = 'Ոչինչ, արի միասին մտածենք։ Պատկերացրու նույն ուժով կհրես դատարկ և լիքը սայլակները։ Ո՞րն ավելի հեշտ դարձավ արագացնել։';
+    } else {
+      replyText = 'Հետաքրքիր միտք է։ Բայց արի վերադառնանք Նյուտոնի բանաձևին (F = m · a). ի՞նչ կստացվի, եթե զանգվածը (m) շատ մեծ է։';
+    }
+
+    // Simulate AI thinking and streaming
     setTimeout(() => {
-      setMessages([
-        ...newMsgs,
-        {
-          role: 'assistant',
-          content: 'Լավ առաջընթաց է։ Հիմա մեկ նախադասությամբ բացատրիր՝ ինչու նույն ուժի դեպքում մեծ զանգվածը դժվար է արագացնել։'
+      setIsTyping(false);
+      let idx = 0;
+      const interval = setInterval(() => {
+        idx += 2;
+        const currentSlice = replyText.slice(0, idx);
+        
+        // Update the last message piece by piece
+        setMessages((prevMsgs) => {
+          const m = [...prevMsgs];
+          // if the last message is from bot in this streaming session, update it
+          if (m[m.length - 1].role === 'assistant' && m[m.length - 1].isStreaming) {
+            m[m.length - 1] = { role: 'assistant', content: currentSlice, isStreaming: true };
+          } else {
+            m.push({ role: 'assistant', content: currentSlice, isStreaming: true });
+          }
+          return m;
+        });
+
+        if (idx >= replyText.length) {
+          clearInterval(interval);
+          setMessages((prev) => {
+            const m = [...prev];
+            m[m.length - 1].isStreaming = false;
+            return m;
+          });
         }
-      ]);
-    }, 1500);
+      }, 30);
+    }, 800);
   };
 
   return (
@@ -106,6 +147,30 @@ export default function SocraticRoom({ messages, setMessages, onComplete }) {
               </div>
             );
           })}
+          
+          {isTyping && (
+            <div style={{
+              display: 'flex', gap: '12px', alignItems: 'flex-end', animation: 'fadeIn 0.4s ease-out'
+            }}>
+                <div style={{ 
+                  width: '36px', height: '36px', borderRadius: '50%',
+                  background: 'rgba(99, 102, 241, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  color: 'var(--primary)', flexShrink: 0
+                }}>
+                  <Bot size={20} />
+                </div>
+                
+                <div style={{
+                  background: '#1e293b', color: 'white', padding: '16px 20px',
+                  borderRadius: '24px', borderBottomLeftRadius: '4px', maxWidth: '80%',
+                  border: '1px solid var(--surface-border)', display: 'flex', gap: '6px'
+                }}>
+                  <span className="dot-typing" style={{ animation: 'pulse-glow 1s infinite alternate', width: '6px', height: '6px', borderRadius: '50%', background: 'var(--primary)' }}></span>
+                  <span className="dot-typing" style={{ animation: 'pulse-glow 1s infinite alternate 0.2s', width: '6px', height: '6px', borderRadius: '50%', background: 'var(--primary)' }}></span>
+                  <span className="dot-typing" style={{ animation: 'pulse-glow 1s infinite alternate 0.4s', width: '6px', height: '6px', borderRadius: '50%', background: 'var(--primary)' }}></span>
+                </div>
+            </div>
+          )}
         </div>
 
         {messages.length > 4 && (

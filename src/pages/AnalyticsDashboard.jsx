@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import {
   Users,
   BookOpenCheck,
@@ -6,6 +7,7 @@ import {
   ShieldCheck,
   BrainCircuit,
   Play,
+  Download
 } from "lucide-react";
 
 const STUDENTS = [
@@ -55,13 +57,20 @@ export default function AnalyticsDashboard() {
   const [activeIdx, setActiveIdx] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [filter, setFilter] = useState('ԲՈԼՈՐԸ'); // Filtering state
+  const [reportGenerated, setReportGenerated] = useState(false);
+
+  const filteredStudents = useMemo(() => {
+    if (filter === 'ԲՈԼՈՐԸ') return STUDENTS;
+    return STUDENTS.filter(s => s.status === filter);
+  }, [filter]);
 
   const displayedTranscript = useMemo(() => {
     if (activeIdx === null) return "";
-    const t = STUDENTS[activeIdx]?.transcript ?? "";
+    const t = filteredStudents[activeIdx]?.transcript ?? "";
     const len = Math.floor((progress / 100) * t.length);
     return t.slice(0, len);
-  }, [activeIdx, progress]);
+  }, [activeIdx, progress, filteredStudents]);
 
   useEffect(() => {
     if (activeIdx === null || !isPlaying) return;
@@ -85,6 +94,14 @@ export default function AnalyticsDashboard() {
     setIsPlaying(true);
     setProgress(0);
   };
+  
+  const handleExport = () => {
+    setReportGenerated(true);
+    setTimeout(() => {
+      setReportGenerated(false);
+      alert('Դասարանի արդյունքների CSV ֆայլը հաջողությամբ գեներացվեց և պատրաստ է ներբեռնման (Այս ֆունկցիան MVP-ի համար սիմուլյացվում է):');
+    }, 1500);
+  };
 
   return (
     <div
@@ -97,6 +114,8 @@ export default function AnalyticsDashboard() {
           justifyContent: "space-between",
           alignItems: "flex-end",
           marginBottom: "40px",
+          flexWrap: "wrap",
+          gap: "20px"
         }}
       >
         <div>
@@ -113,6 +132,15 @@ export default function AnalyticsDashboard() {
           </h2>
           <p>Դասարան N9 • Առարկա՝ Ֆիզիկա (B2G Մոդել)</p>
         </div>
+        <button 
+          className="btn btn-primary"
+          onClick={handleExport}
+          disabled={reportGenerated}
+          style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
+        >
+          <Download size={18} />
+          {reportGenerated ? 'Պատրաստվում է...' : 'Export Report (CSV)'}
+        </button>
       </div>
 
       <div
@@ -249,28 +277,76 @@ export default function AnalyticsDashboard() {
         </div>
       </div>
 
-      <h3
-        style={{
-          marginBottom: "24px",
-          fontSize: "1.5rem",
-          display: "flex",
-          alignItems: "center",
-          gap: "12px",
-        }}
-      >
-        🚦 Traffic Light System
-        <span
-          className="pill-badge"
+      <div className="glass-panel" style={{ padding: "24px", marginBottom: "32px", borderTop: "4px solid var(--primary)" }}>
+        <h3 style={{ marginBottom: "16px", display: "flex", alignItems: "center", gap: "8px" }}>
+          📊 Գիտելիքի Յուրացման Դինամիկա (Վերջին 3 շաբաթ)
+        </h3>
+        <div style={{ width: "100%", height: 300 }}>
+          {typeof window !== 'undefined' && (
+            <ResponsiveContainer width="100%" height="100%">
+              <AreaChart data={[
+                { day: 'Շաբաթ 1', score: 25 },
+                { day: 'Շաբաթ 2', score: 45 },
+                { day: 'Շաբաթ 3', score: 72 },
+                { day: 'Այսօր', score: 85 },
+              ]}>
+                <defs>
+                  <linearGradient id="colorScore" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#6366f1" stopOpacity={0.8}/>
+                    <stop offset="95%" stopColor="#6366f1" stopOpacity={0}/>
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" vertical={false} />
+                <XAxis dataKey="day" stroke="#94a3b8" tick={{ fill: '#94a3b8' }} />
+                <YAxis stroke="#94a3b8" tick={{ fill: '#94a3b8' }} />
+                <Tooltip 
+                  contentStyle={{ backgroundColor: 'rgba(15, 23, 42, 0.9)', border: '1px solid #334155', borderRadius: '8px', color: '#fff' }}
+                  itemStyle={{ color: '#818cf8' }}
+                />
+                <Area type="monotone" dataKey="score" stroke="#818cf8" strokeWidth={3} fillOpacity={1} fill="url(#colorScore)" />
+              </AreaChart>
+            </ResponsiveContainer>
+          )}
+        </div>
+      </div>
+
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: "24px", flexWrap: 'wrap', gap: '16px' }}>
+        <h3
           style={{
-            fontSize: "0.8rem",
-            verticalAlign: "middle",
-            background: "var(--primary-glow)",
-            borderColor: "var(--primary)",
+            fontSize: "1.5rem",
+            display: "flex",
+            alignItems: "center",
+            gap: "12px",
+            margin: 0
           }}
         >
-          Live Tracking
-        </span>
-      </h3>
+          🚦 Traffic Light System
+          <span
+            className="pill-badge"
+            style={{
+              fontSize: "0.8rem",
+              verticalAlign: "middle",
+              background: "var(--primary-glow)",
+              borderColor: "var(--primary)",
+            }}
+          >
+            Live Tracking
+          </span>
+        </h3>
+        
+        <div style={{ display: 'flex', gap: '8px' }}>
+          {['ԲՈԼՈՐԸ', 'ԿԱՆԱՉ', 'ԴԵՂԻՆ', 'ԿԱՐՄԻՐ'].map(f => (
+            <button 
+              key={f}
+              onClick={() => { setFilter(f); setActiveIdx(null); setIsPlaying(false); }}
+              className={`btn ${filter === f ? 'btn-primary' : 'btn-secondary'}`}
+              style={{ padding: '6px 14px', fontSize: '0.9rem' }}
+            >
+              {f}
+            </button>
+          ))}
+        </div>
+      </div>
 
       <div className="glass-panel" style={{ overflow: "hidden" }}>
         <table
@@ -294,7 +370,9 @@ export default function AnalyticsDashboard() {
             </tr>
           </thead>
           <tbody>
-            {STUDENTS.map((student, i) => (
+            {filteredStudents.length === 0 ? (
+              <tr><td colSpan="4" style={{ padding: "20px", textAlign: "center", color: 'var(--text-muted)' }}>Այս խմբում որևէ արդյունք չկա։</td></tr>
+            ) : filteredStudents.map((student, i) => (
               <tr
                 key={i}
                 style={{
