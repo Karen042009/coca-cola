@@ -3,10 +3,13 @@ import { Send, Book, MessageSquare, Bot, User } from 'lucide-react';
 import { useAppContext } from "../context/AppContext";
 import { useNavigate, useParams } from "react-router-dom";
 import { getTopicContent } from '../data/mockContent';
+import { useLanguage } from '../context/LanguageContext';
+import { translations, t } from '../i18n/translations';
 
 export default function SocraticRoom() {
   const navigate = useNavigate();
   const { chatMessages: messages, setChatMessages: setMessages, setShowVoiceModal } = useAppContext();
+  const { lang } = useLanguage();
   const [inputText, setInputText] = useState('');
   
   const onComplete = () => setShowVoiceModal(true);
@@ -83,7 +86,7 @@ export default function SocraticRoom() {
           <div style={{ padding: '12px', background: 'rgba(99, 102, 241, 0.1)', borderRadius: '12px', color: 'var(--primary)' }}>
             <Book size={24} />
           </div>
-          <h2 style={{ fontSize: '1.75rem', margin: 0 }}>Տեսություն</h2>
+          <h2 style={{ fontSize: '1.75rem', margin: 0 }}>{t(translations.socratic.theoryTitle, lang)}</h2>
         </div>
         
         <div style={{ 
@@ -102,7 +105,7 @@ export default function SocraticRoom() {
         </div>
 
         <div style={{ marginTop: 'auto', padding: '16px', background: 'rgba(168, 85, 247, 0.1)', borderRadius: '12px', color: '#d8b4fe', border: '1px solid rgba(168, 85, 247, 0.2)' }}>
-          <b>Նպատակ՝</b> հասկանալ պատճառահետևանքային կապը, ոչ թե պարզապես բանաձևը անգիր անել։ AI-ը կուղղորդի ձեզ։
+          <b>{t(translations.socratic.goalLabel, lang)}՝</b> {t(translations.socratic.goalText, lang)}
         </div>
       </div>
 
@@ -113,8 +116,8 @@ export default function SocraticRoom() {
             <Bot size={24} color="white" />
           </div>
           <div>
-            <h3 style={{ margin: 0 }}>Mentoria AI Մենթոր</h3>
-            <span style={{ fontSize: '0.85rem', color: 'var(--success)' }}>● Առցանց (Սոկրատեսյան ռեժիմ)</span>
+            <h3 style={{ margin: 0 }}>{t(translations.socratic.mentorName, lang)}</h3>
+            <span style={{ fontSize: '0.85rem', color: 'var(--success)' }}>{t(translations.socratic.online, lang)}</span>
           </div>
         </div>
 
@@ -185,7 +188,7 @@ export default function SocraticRoom() {
         {messages.length > 4 && (
           <div style={{ padding: '0 24px' }} className="animate-fade-in">
             <button className="btn btn-primary" style={{ width: '100%', marginBottom: '16px', padding: '16px' }} onClick={onComplete}>
-              Ավարտել և անցնել բանավոր պաշտպանության →
+              {t(translations.socratic.completeBtn, lang)}
             </button>
           </div>
         )}
@@ -196,7 +199,7 @@ export default function SocraticRoom() {
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-            placeholder="Գրեք ձեր պատասխանը..."
+            placeholder={t(translations.socratic.placeholder, lang)}
             style={{
               flex: 1,
               background: 'rgba(255, 255, 255, 0.05)',

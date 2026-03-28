@@ -2,10 +2,13 @@ import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getTopicContent } from '../data/mockContent';
 import { ChevronLeft, CheckCircle2, XCircle } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
+import { translations, t } from '../i18n/translations';
 
 export default function PracticePage() {
   const navigate = useNavigate();
   const { topicId } = useParams();
+  const { lang } = useLanguage();
   const content = getTopicContent(topicId);
   const [selected, setSelected] = useState(null);
   const [submitted, setSubmitted] = useState(false);
@@ -20,17 +23,17 @@ export default function PracticePage() {
         onClick={() => navigate(-1)}
         style={{ padding: '8px 16px', marginBottom: '24px', borderRadius: '100px' }}
       >
-        <ChevronLeft size={18} /> Վերադառնալ
+        <ChevronLeft size={18} /> {t(translations.practice.backBtn, lang)}
       </button>
 
       <div style={{ textAlign: 'center', marginBottom: '40px' }}>
-        <h2 className="text-gradient">✍️ Գործնական Խնդիրներ</h2>
-        <p>Կիրառիր սովորածդ տեսությունը պրակտիկայում</p>
+        <h2 className="text-gradient">{t(translations.practice.title, lang)}</h2>
+        <p>{lang === 'hy' ? 'Կիրառիր սովորածդ տեսությունը պրակտիկայում' : lang === 'ru' ? 'Примените изученную теорию на практике' : 'Apply the theory you learned in practice'}</p>
       </div>
 
       <div className="glass-panel" style={{ padding: '32px' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '24px' }}>
-          <span style={{ color: 'var(--text-muted)' }}>Հարց 1 / 5</span>
+          <span style={{ color: 'var(--text-muted)' }}>{t(translations.practice.question, lang)} 1 / 5</span>
           <span style={{ color: 'var(--primary)', fontWeight: 'bold' }}>+10 XP</span>
         </div>
         
@@ -79,11 +82,11 @@ export default function PracticePage() {
               onClick={() => setSubmitted(true)}
               disabled={!selected}
             >
-              Պատասխանել
+              {t(translations.practice.submit, lang)}
             </button>
           ) : (
              <button className="btn btn-secondary" onClick={() => navigate(-1)}>
-               Ավարտել և Վերադառնալ
+               {t(translations.practice.backToDash, lang)}
              </button>
           )}
         </div>

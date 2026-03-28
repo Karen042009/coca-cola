@@ -2,10 +2,13 @@ import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { CheckCircle2, Lock, Timer, GitMerge, ChevronLeft } from "lucide-react";
 import { useAppContext } from "../context/AppContext";
+import { useLanguage } from "../context/LanguageContext";
+import { translations, t } from "../i18n/translations";
 
 export default function StudentDashboard() {
   const navigate = useNavigate();
   const { subjectId, topicId } = useParams();
+  const { lang } = useLanguage();
   
   // Fake state simulation for the topic
   const status = {
@@ -21,7 +24,7 @@ export default function StudentDashboard() {
       icon: <CheckCircle2 size={24} color="white" />,
       bg: "linear-gradient(135deg, #10b981, #059669)",
       border: "rgba(16, 185, 129, 0.4)",
-      label: "✅ Ավարտված է",
+      label: `✅ ${t(translations.dashboard.done, lang)}`,
       pulse: false,
       opacity: 1,
     },
@@ -30,7 +33,7 @@ export default function StudentDashboard() {
       icon: <Timer size={24} color="white" />,
       bg: "linear-gradient(135deg, var(--secondary), #7e22ce)",
       border: "rgba(168, 85, 247, 0.6)",
-      label: "⏳ Ընթացքի մեջ է",
+      label: `⏳ ${t(translations.dashboard.inProgress, lang)}`,
       pulse: true,
       opacity: 1,
     },
@@ -39,17 +42,17 @@ export default function StudentDashboard() {
       icon: <Lock size={24} color="var(--text-muted)" />,
       bg: "var(--surface-light)",
       border: "var(--surface-border)",
-      label: "🔒 Փակված է",
+      label: `🔒 ${t(translations.dashboard.locked, lang)}`,
       pulse: false,
       opacity: 0.5,
     },
   };
 
   const nodes = [
-    { id: "theory", title: "1. Տեսություն (Մուլտիմեդիա)", statusKey: "theory" },
-    { id: "practice", title: "2. Գործնական (Խնդիրներ և պրակտիկա)", statusKey: "practice" },
-    { id: "socratic", title: "3. Սոկրատեսյան Չաթ (AI Օգնական)", statusKey: "socratic" },
-    { id: "voice", title: "4. Բանավոր Պաշտպանություն", statusKey: "voice" }
+    { id: "theory", title: `1. ${t(translations.dashboard.theory, lang)} (Multimedia)`, statusKey: "theory" },
+    { id: "practice", title: `2. ${t(translations.dashboard.practice, lang)} (Quiz & Do)`, statusKey: "practice" },
+    { id: "socratic", title: `3. ${t(translations.dashboard.socratic, lang)} Chat (AI)`, statusKey: "socratic" },
+    { id: "voice", title: `4. ${t(translations.dashboard.voice, lang)} Defense`, statusKey: "voice" }
   ];
 
   return (
@@ -62,12 +65,12 @@ export default function StudentDashboard() {
         onClick={() => navigate(`/student/${subjectId || ''}`)}
         style={{ padding: '8px 16px', marginBottom: '24px', borderRadius: '100px' }}
       >
-        <ChevronLeft size={18} /> Թեմաներ
+        <ChevronLeft size={18} /> {t(translations.dashboard.backBtn, lang)}
       </button>
 
       <div style={{ textAlign: "center", marginBottom: "24px" }}>
-        <h2 className="text-gradient">Structured Learning Path</h2>
-        <p>Ուսուցման փուլեր • {topicId || 'Ընթացիկ թեմա'}</p>
+        <h2 className="text-gradient">{t(translations.dashboard.knowledge, lang)}</h2>
+        <p>{topicId || 'Dynamics'} • {t(translations.dashboard.progress, lang)}</p>
       </div>
 
       <div
@@ -86,8 +89,8 @@ export default function StudentDashboard() {
              <CheckCircle2 color="var(--primary)" size={28} />
           </div>
           <div>
-            <div style={{ color: "var(--text-muted)", fontSize: "0.85rem" }}>Ընթացիկ մակարդակ</div>
-            <div style={{ fontSize: "1.45rem", fontWeight: "bold" }}>Լեվել 4: <span style={{ color: "var(--primary)" }}>Հետազոտող</span></div>
+            <div style={{ color: "var(--text-muted)", fontSize: "0.85rem" }}>{t(translations.dashboard.level, lang)}</div>
+            <div style={{ fontSize: "1.45rem", fontWeight: "bold" }}>Level 4: <span style={{ color: "var(--primary)" }}>Explorer</span></div>
           </div>
         </div>
         <div
@@ -98,7 +101,7 @@ export default function StudentDashboard() {
              <Timer color="var(--warning)" size={28} />
           </div>
           <div>
-            <div style={{ color: "var(--text-muted)", fontSize: "0.85rem" }}>Դասի Մետաղադրամներ (XP)</div>
+            <div style={{ color: "var(--text-muted)", fontSize: "0.85rem" }}>{t(translations.dashboard.xp, lang)}</div>
             <div style={{ fontSize: "1.45rem", fontWeight: "bold", color: "var(--warning)" }}>1,250 XP</div>
           </div>
         </div>
@@ -115,9 +118,9 @@ export default function StudentDashboard() {
         }}
       >
         <div style={{ minWidth: "220px" }}>
-          <h3 style={{ margin: "0 0 6px 0" }}>Օրական նպատակներ</h3>
+          <h3 style={{ margin: "0 0 6px 0" }}>Daily Goal</h3>
           <div style={{ fontSize: "0.9rem", color: "var(--text-muted)" }}>
-            Մոտեցումով 4 քայլ՝ օրը 20 րոպե
+            20 mins / day
           </div>
         </div>
         <div style={{ flex: 1, minWidth: "260px" }}>
@@ -145,14 +148,14 @@ export default function StudentDashboard() {
               color: "var(--text-muted)",
             }}
           >
-            65% հասել է ընտրված ուսումնական քայլին
+            65% done
           </div>
         </div>
         <div>
           <button
             className="btn btn-secondary"
             style={{ padding: "10px 14px", fontSize: "0.85rem" }}
-            onClick={() => alert("Սաքրատեսյան ընթացքը թարմացվում է...")}
+            onClick={() => alert("Updating...")}
           >
             Update Progress
           </button>
@@ -203,7 +206,7 @@ export default function StudentDashboard() {
                   } else if (node.statusKey === 'practice' && isAccessible) {
                     navigate(`/practice/${topicId || 'dynamics'}`);
                   } else if (status[node.statusKey] === "locked") {
-                    alert("Խնդրում ենք նախ ավարտել նախորդ թեման:");
+                    alert(t(translations.dashboard.lockAlert, lang));
                   }
                 }}
               >
@@ -246,7 +249,7 @@ export default function StudentDashboard() {
                     className={`btn ${isPlayable ? 'btn-primary' : 'btn-secondary'}`}
                     style={{ padding: "8px 20px", borderRadius: "100px" }}
                   >
-                    {node.statusKey === 'socratic' && isPlayable ? 'Սկսել սենյակը' : isPlayable ? 'Բացել մոդուլը' : 'Կրկնել'}
+                    {node.statusKey === 'socratic' && isPlayable ? t(translations.dashboard.nodeStart, lang) : isPlayable ? t(translations.dashboard.nodeStart, lang) : t(translations.dashboard.nodeReview, lang)}
                   </button>
                 )}
               </div>

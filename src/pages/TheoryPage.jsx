@@ -2,10 +2,13 @@ import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getTopicContent } from '../data/mockContent';
 import { ChevronLeft, PlayCircle, FileText, CheckCircle2 } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
+import { translations, t } from '../i18n/translations';
 
 export default function TheoryPage() {
   const navigate = useNavigate();
   const { topicId } = useParams();
+  const { lang } = useLanguage();
   const content = getTopicContent(topicId);
   const [completed, setCompleted] = useState(false);
 
@@ -16,7 +19,7 @@ export default function TheoryPage() {
         onClick={() => navigate(-1)}
         style={{ padding: '8px 16px', marginBottom: '24px', borderRadius: '100px' }}
       >
-        <ChevronLeft size={18} /> Վերադառնալ
+        <ChevronLeft size={18} /> {t(translations.theory.backBtn, lang)}
       </button>
 
       <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap' }}>
@@ -28,7 +31,7 @@ export default function TheoryPage() {
               flexDirection: 'column', position: 'relative'
             }}>
                <PlayCircle size={64} color="var(--primary)" style={{ cursor: 'pointer', opacity: 0.8 }} />
-               <p style={{ marginTop: '16px', color: 'var(--text-muted)' }}>Ինտերակտիվ վիդեոդաս (AI գեներացված 3D)</p>
+               <p style={{ marginTop: '16px', color: 'var(--text-muted)' }}>{t(translations.theory.videoLabel, lang)}</p>
                
                <div style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', height: '6px', background: 'rgba(255,255,255,0.1)' }}>
                  <div style={{ width: '45%', height: '100%', background: 'var(--primary)' }}></div>
@@ -44,22 +47,22 @@ export default function TheoryPage() {
 
         <div style={{ flex: '1 1 300px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
           <div className="glass-panel" style={{ padding: '24px' }}>
-            <h3 style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}><FileText size={20} color="var(--secondary)" /> Դասի Նյութեր</h3>
+            <h3 style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}><FileText size={20} color="var(--secondary)" /> {t(translations.theory.materials, lang)}</h3>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '12px' }}>
               <li style={{ background: 'rgba(255,255,255,0.05)', padding: '12px', borderRadius: '8px', display: 'flex', justifyContent: 'space-between' }}>
-                <span>Կոնսպեկտ PDF</span>
-                <span style={{ color: 'var(--primary)', cursor: 'pointer' }}>Բացել</span>
+                <span>{t(translations.theory.pdf, lang)}</span>
+                <span style={{ color: 'var(--primary)', cursor: 'pointer' }}>{t(translations.theory.open, lang)}</span>
               </li>
               <li style={{ background: 'rgba(255,255,255,0.05)', padding: '12px', borderRadius: '8px', display: 'flex', justifyContent: 'space-between' }}>
-                <span>3D մոդել (Ուժ/Զանգված)</span>
-                <span style={{ color: 'var(--primary)', cursor: 'pointer' }}>Բացել</span>
+                <span>{t(translations.theory.model3d, lang)}</span>
+                <span style={{ color: 'var(--primary)', cursor: 'pointer' }}>{t(translations.theory.open, lang)}</span>
               </li>
             </ul>
           </div>
           
           <div className="glass-panel" style={{ padding: '24px', background: 'rgba(16, 185, 129, 0.05)', borderColor: 'var(--success)' }}>
-            <h3 style={{ marginTop: 0 }}>Ամփոփում</h3>
-            <p style={{ color: '#cbd5e1', fontSize: '0.9rem', marginBottom: '24px' }}>Նայեք վիդեոդասը և ծանոթացեք կոնսպեկտին՝ գործնական փուլին անցնելու համար։</p>
+            <h3 style={{ marginTop: 0 }}>{t(translations.theory.summary, lang)}</h3>
+            <p style={{ color: '#cbd5e1', fontSize: '0.9rem', marginBottom: '24px' }}>{t(translations.theory.summaryText, lang)}</p>
             <button 
               className={`btn ${completed ? 'btn-secondary' : 'btn-primary'}`} 
               style={{ width: '100%', display: 'flex', justifyContent: 'center', gap: '8px' }}
@@ -68,7 +71,7 @@ export default function TheoryPage() {
                 setTimeout(() => navigate(-1), 1000);
               }}
             >
-              {completed ? <><CheckCircle2 size={18} /> Նշված է որպես արված</> : 'Նշել որպես կարդացված'}
+              {completed ? <><CheckCircle2 size={18} /> {t(translations.theory.marked, lang)}</> : t(translations.theory.markDone, lang)}
             </button>
           </div>
         </div>

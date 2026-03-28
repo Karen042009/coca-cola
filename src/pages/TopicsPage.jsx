@@ -2,10 +2,13 @@ import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ChevronLeft, Maximize2, GitMerge } from 'lucide-react';
 import { subjectsData } from '../data/topicsData';
+import { useLanguage } from '../context/LanguageContext';
+import { translations, t } from '../i18n/translations';
 
 export default function TopicsPage() {
   const navigate = useNavigate();
   const { subjectId } = useParams();
+  const { lang } = useLanguage();
 
   const subject = subjectsData[subjectId] || subjectsData.physics;
 
@@ -16,12 +19,12 @@ export default function TopicsPage() {
         onClick={() => navigate('/student')}
         style={{ padding: '8px 16px', marginBottom: '24px', borderRadius: '100px' }}
       >
-        <ChevronLeft size={18} /> Առարկաներ
+        <ChevronLeft size={18} /> {t(translations.topics.backBtn, lang)}
       </button>
 
       <div style={{ textAlign: 'center', marginBottom: '40px' }}>
-        <h2 className="text-gradient">📚 {subject.title}ի Թեմաներ</h2>
-        <p>Ընտրեք ուսումնական մոդուլը՝ AI դասը սկսելու համար</p>
+        <h2 className="text-gradient">📚 {translations.subjects.names[subjectId] ? t(translations.subjects.names[subjectId], lang) : subject.title}{t(translations.topics.titleSuffix, lang)}</h2>
+        <p>{t(translations.topics.sub, lang)}</p>
       </div>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
@@ -57,13 +60,15 @@ export default function TopicsPage() {
                </div>
                <div>
                  <h3 style={{ fontSize: '1.2rem', margin: '0 0 4px 0' }}>{t.title}</h3>
-                 <div style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>Բաղկացած է {t.modules || 4} մոդուլից</div>
+                 <div style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>
+                   {t(translations.topics.madeOf, lang)} {t.modules || 4} {t(translations.topics.modules, lang)}
+                 </div>
                </div>
             </div>
             
             <div style={{ width: '150px', textAlign: 'right' }}>
                <div style={{ fontSize: '0.85rem', marginBottom: '6px', color: 'var(--text-muted)' }}>
-                 {t.locked ? 'Փակված է' : `Առաջընթաց՝ ${t.prg}%`}
+                 {t.locked ? t(translations.topics.locked, lang) : `${t(translations.topics.progress, lang)}՝ ${t.prg}%`}
                </div>
                <div style={{ height: '6px', borderRadius: '99px', background: 'rgba(255,255,255,0.1)' }}>
                   <div style={{ width: `${t.prg}%`, height: '100%', borderRadius: '99px', background: 'linear-gradient(90deg, var(--primary), var(--secondary))' }}></div>

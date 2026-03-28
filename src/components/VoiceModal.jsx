@@ -2,8 +2,11 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Mic, X, Activity, CheckCircle, ArrowRight } from 'lucide-react';
 import { getTopicContent } from '../data/mockContent';
+import { useLanguage } from '../context/LanguageContext';
+import { translations, t } from '../i18n/translations';
 
 export default function VoiceModal({ onClose, onSuccess, validated }) {
+  const { lang } = useLanguage();
   const [recording, setRecording] = useState(false);
   const [analyzing, setAnalyzing] = useState(false);
   const [transcript, setTranscript] = useState('');
@@ -84,11 +87,11 @@ export default function VoiceModal({ onClose, onSuccess, validated }) {
         </button>
 
         <h2 style={{ textAlign: 'center', marginBottom: '32px' }} className="text-gradient">
-          🎤 Ամփոփիչ Բանավոր Պաշտպանություն
+          {t(translations.voice.title, lang)}
         </h2>
 
         <div style={{ background: 'rgba(255,255,255,0.05)', padding: '24px', borderRadius: '16px', textAlign: 'center', fontSize: '1.2rem', marginBottom: '40px', borderLeft: '4px solid var(--primary)' }}>
-          <b style={{ color: 'var(--primary)' }}>AI-ի հարցը:</b> {content.voicePrompt}
+          <b style={{ color: 'var(--primary)' }}>{t(translations.voice.questionLabel, lang)}</b> {content.voicePrompt}
         </div>
 
         {!validated && !analyzing && !recording && (
@@ -106,7 +109,7 @@ export default function VoiceModal({ onClose, onSuccess, validated }) {
              >
                <Mic size={48} color="white" />
              </button>
-             <p style={{ fontSize: '1.2rem', color: 'var(--text-main)', fontWeight: '500' }}>Սեղմեք խոսելու համար</p>
+             <p style={{ fontSize: '1.2rem', color: 'var(--text-main)', fontWeight: '500' }}>{t(translations.voice.pressToSpeak, lang)}</p>
 
              {/* Background Noise Toggle */}
              <div 
@@ -131,7 +134,7 @@ export default function VoiceModal({ onClose, onSuccess, validated }) {
                   }}></div>
                 </div>
                 <span style={{ color: noiseFilter ? 'var(--success)' : 'var(--text-muted)', fontWeight: 600 }}>
-                  Աղմուկի չեղարկում (AI Denoise Demo)
+                  {t(translations.voice.noiseCancel, lang)}
                 </span>
              </div>
           </div>
@@ -148,15 +151,15 @@ export default function VoiceModal({ onClose, onSuccess, validated }) {
             }}>
                <Mic size={48} color="white" />
             </div>
-            <p style={{ fontSize: '1.2rem', color: 'var(--danger)', fontWeight: 'bold' }}>🔴 Ձայնագրվում է... խոսեք հիմա</p>
+            <p style={{ fontSize: '1.2rem', color: 'var(--danger)', fontWeight: 'bold' }}>{t(translations.voice.recording, lang)}</p>
           </div>
         )}
 
         {analyzing && (
           <div className="flex-center animate-fade-in" style={{ flexDirection: 'column', gap: '24px' }}>
             <Activity size={64} color="var(--primary)" style={{ animation: 'float 2s ease-in-out infinite' }} />
-            <h3 style={{ color: 'var(--primary)' }}>Վերլուծվում է տրամաբանությունը...</h3>
-            <p>Mentoria AI Engine-ը ստուգում է իմաստային ճշգրտությունը...</p>
+            <h3 style={{ color: 'var(--primary)' }}>{t(translations.voice.analyzing, lang)}</h3>
+            <p>{t(translations.voice.aiEngine, lang)}</p>
 
             <div style={{
               width: '100%',
@@ -171,10 +174,10 @@ export default function VoiceModal({ onClose, onSuccess, validated }) {
               overflow: 'hidden',
             }}>
               <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '2px', marginBottom: 8 }}>
-                Live Speech-to-Text
+                {t(translations.voice.liveSTT, lang)}
               </div>
               <div style={{ fontStyle: 'italic', fontWeight: 500 }}>
-                {transcript || '... խոսքը թարգմանվում է տեքստի'}
+                {transcript || t(translations.voice.transcribing, lang)}
               </div>
             </div>
           </div>
@@ -185,12 +188,12 @@ export default function VoiceModal({ onClose, onSuccess, validated }) {
             
             <div style={{ background: 'rgba(16, 185, 129, 0.1)', border: '1px solid rgba(16, 185, 129, 0.3)', padding: '24px', borderRadius: '16px', textAlign: 'center' }}>
                <CheckCircle size={64} color="var(--success)" style={{ marginBottom: '16px', display: 'inline-block' }} />
-               <h3 style={{ color: 'var(--success)', fontSize: '1.5rem', marginBottom: '8px' }}>Թեման յուրացված է 100%-ով</h3>
-               <p style={{ color: 'var(--success)', opacity: 0.8 }}>Վստահորեն կարող եք անցնել առաջ</p>
+               <h3 style={{ color: 'var(--success)', fontSize: '1.5rem', marginBottom: '8px' }}>{t(translations.voice.successTitle, lang)}</h3>
+               <p style={{ color: 'var(--success)', opacity: 0.8 }}>{t(translations.voice.successSub, lang)}</p>
             </div>
 
             <div style={{ background: 'rgba(0,0,0,0.3)', padding: '20px', borderRadius: '12px', borderLeft: '4px solid var(--text-muted)' }}>
-              <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '2px' }}>Speech-To-Text Transcription</div>
+              <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '2px' }}>{t(translations.voice.sttLabel, lang)}</div>
               <p style={{ fontStyle: 'italic', fontWeight: '500' }}>{transcript}</p>
             </div>
 
@@ -199,13 +202,13 @@ export default function VoiceModal({ onClose, onSuccess, validated }) {
                 onClose();
                 navigate('/student');
               }}>
-                Վերադառնալ Ծառ
+                {t(translations.voice.backTree, lang)}
               </button>
               <button className="btn btn-primary" onClick={() => {
                 onClose();
                 navigate('/analytics');
               }}>
-                Տեսնել Անալիտիկան <ArrowRight size={20} />
+                {t(translations.voice.analytics, lang)} <ArrowRight size={20} />
               </button>
             </div>
 

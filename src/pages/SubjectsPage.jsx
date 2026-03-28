@@ -1,10 +1,11 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BookA, Calculator, Atom, Globe2, Beaker, Code, Landmark, ScrollText, Map, Languages, TrendingUp, Music, Palette, Rocket, Brain, Scale } from 'lucide-react';
-
+import { useLanguage } from '../context/LanguageContext';
+import { translations, t } from '../i18n/translations';
 export default function SubjectsPage() {
   const navigate = useNavigate();
-
+  const { lang } = useLanguage();
   const subjects = [
     { id: 'physics', title: 'Ֆիզիկա', icon: <Atom size={32} color="var(--primary)" />, color: 'var(--primary)', glow: 'rgba(99, 102, 241, 0.2)', locked: false },
     { id: 'math', title: 'Մաթեմատիկա', icon: <Calculator size={32} color="var(--success)" />, color: 'var(--success)', glow: 'rgba(16, 185, 129, 0.2)', locked: false },
@@ -27,8 +28,8 @@ export default function SubjectsPage() {
   return (
     <div className="animate-fade-in" style={{ padding: '20px', maxWidth: '1000px', margin: '0 auto' }}>
       <div style={{ textAlign: 'center', marginBottom: '40px' }}>
-        <h2 className="text-gradient">📚 Ընտրեք Առարկան</h2>
-        <p>Mentoria AI-ի հասանելի գիտակարգերը</p>
+        <h2 className="text-gradient">{t(translations.subjects.title, lang)}</h2>
+        <p>{t(translations.subjects.sub, lang)}</p>
       </div>
 
       <div style={{
@@ -70,7 +71,7 @@ export default function SubjectsPage() {
               <div style={{
                 position: 'absolute', top: '12px', right: '12px',
                 background: 'rgba(0,0,0,0.5)', padding: '4px 8px', borderRadius: '8px', fontSize: '0.75rem', color: '#cbd5e1'
-              }}>Շուտով</div>
+              }}>{t(translations.subjects.soon, lang)}</div>
             )}
             <div style={{
               width: '80px', height: '80px', borderRadius: '50%',
@@ -79,7 +80,9 @@ export default function SubjectsPage() {
             }}>
               {s.icon}
             </div>
-            <h3 style={{ fontSize: '1.4rem', margin: 0 }}>{s.title}</h3>
+            <h3 style={{ fontSize: '1.4rem', margin: 0 }}>
+              {translations.subjects.names[s.id] ? t(translations.subjects.names[s.id], lang) : s.title}
+            </h3>
           </div>
         ))}
       </div>
