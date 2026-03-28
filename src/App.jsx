@@ -20,7 +20,7 @@ export default function App() {
     <>
       <TopNav />
       
-      <main className="container" style={{ paddingTop: '100px', paddingBottom: '60px' }}>
+      <main className={window.location.pathname === '/' ? "" : "container"} style={window.location.pathname === '/' ? {} : { paddingTop: '100px', paddingBottom: '60px' }}>
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/student" element={<SubjectsPage />} />

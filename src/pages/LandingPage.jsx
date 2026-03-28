@@ -116,8 +116,23 @@ export default function LandingPage() {
   const navigate = useNavigate();
 
   return (
-    <div className="landing-pitch" style={{ width: "100%", overflowX: "hidden", background: "#09090b", color: "#f8fafc" }}>
-      
+    <div className="landing-pitch" style={{ 
+      width: "100%", 
+      overflowX: "hidden", 
+      background: "linear-gradient(135deg, #0a0c1a 0%, #1e1b4b 50%, #2e1065 100%)", 
+      color: "#f8fafc",
+      position: "relative"
+    }}>
+      {/* Visual Separator Line - Semi-transparent */}
+      <div style={{ 
+        position: "absolute", 
+        top: "50%", 
+        left: 0, 
+        right: 0, 
+        height: "2px", 
+        background: "linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.2), transparent)",
+        zIndex: 5
+      }} />
       {/* ========================================================= */}
       {/* SLIDE 1: VISION */}
       {/* ========================================================= */}
@@ -125,31 +140,31 @@ export default function LandingPage() {
         minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "center",
         padding: "120px 20px 80px", position: "relative", overflow: "hidden"
       }}>
-        <GlowOrb top="-10%" left="-5%" color="#8b5cf6" size={800} />
-        <GlowOrb bottom="-10%" right="-5%" color="#ec4899" size={600} />
+        <GlowOrb top="-10%" left="-5%" color="#312e81" size={1000} />
+        <GlowOrb bottom="-10%" right="-5%" color="#4c1d95" size={800} />
 
-        <div style={{ maxWidth: "1300px", margin: "0 auto", width: "100%", zIndex: 10 }}>
+        <div style={{ maxWidth: "1400px", margin: "0 auto", width: "100%", zIndex: 10 }}>
           
-          <div style={{ textAlign: "center", marginBottom: "72px" }}>
+          <div style={{ textAlign: "center", marginBottom: "80px" }}>
             <motion.div
               initial={{ opacity: 0, y: 28 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.75, ease: [0.25, 0.1, 0.25, 1] }}
             >
-              <div style={{ marginBottom: "22px" }}>
+              <div style={{ marginBottom: "28px" }}>
                 <span className="pitch-deck-pill">🚀 PITCH DECK · «Mentoria AI»</span>
               </div>
               <SectionLabel num="1" title="10-ամյա Վիզիոն և Պարադիգմի Տրանսֆորմացիա" />
-              <div className="pitch-shimmer-line" aria-hidden />
+              <div className="pitch-shimmer-line" style={{ width: "500px" }} aria-hidden />
               <h1
                 className="pitch-hero-title"
                 style={{
-                  fontSize: "clamp(2.2rem, 5.5vw, 4.2rem)",
+                  fontSize: "clamp(3rem, 7vw, 5.5rem)",
                   fontWeight: 900,
-                  lineHeight: 1.08,
-                  marginBottom: "16px",
-                  letterSpacing: "-0.03em",
-                  maxWidth: "1000px",
+                  lineHeight: 1.05,
+                  marginBottom: "24px",
+                  letterSpacing: "-0.04em",
+                  maxWidth: "1100px",
                   marginLeft: "auto",
                   marginRight: "auto",
                 }}
@@ -158,10 +173,10 @@ export default function LandingPage() {
                 <br />
                 առաջիկա 10 տարիների համար
               </h1>
-              <p style={{ fontSize: "1.05rem", color: "#94a3b8", fontWeight: 500, marginBottom: "8px" }}>
-                Վերջնական PM-տարբերակ · Տևողությունը՝ <strong style={{ color: "#e2e8f0" }}>5 րոպե</strong>
+              <p style={{ fontSize: "1.4rem", color: "#cbd5e1", fontWeight: 500, marginBottom: "12px" }}>
+                Վերջնական PM-տարբերակ · Տևողությունը՝ <strong style={{ color: "#fff" }}>5 րոպե</strong>
               </p>
-              <p style={{ fontSize: "0.95rem", color: "#64748b", maxWidth: "560px", margin: "0 auto" }}>
+              <p style={{ fontSize: "1.1rem", color: "#94a3b8", maxWidth: "700px", margin: "0 auto" }}>
                 Նույն պատմությունը՝ մեկ էկրան, մեկ հոսք, ժյուրիի համար պատրաստ
               </p>
             </motion.div>
@@ -172,25 +187,24 @@ export default function LandingPage() {
             <FadeIn x={-30} delay={0.2}>
               <motion.div 
                 className="pitch-chart-float"
-                whileHover={{ y: -5, boxShadow: "0 25px 50px rgba(139,92,246,0.1)" }}
                 style={{ 
-                  background: "rgba(24,24,27,0.4)", borderRadius: "32px", padding: "40px", height: "450px", 
-                  border: "1px solid rgba(255,255,255,0.05)", backdropFilter: "blur(20px)"
+                  background: "transparent", borderRadius: "32px", padding: "40px", height: "450px", 
+                  border: "none", backdropFilter: "none", boxShadow: "none"
                 }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "20px", flexWrap: "wrap", gap: "12px" }}>
                   <div>
-                    <h3 style={{ fontSize: "1.25rem", fontWeight: 700, margin: "0 0 8px 0", color: "#f8fafc" }}>
+                    <h3 style={{ fontSize: "1.4rem", fontWeight: 700, margin: "0 0 8px 0", color: "#f8fafc" }}>
                       Ինֆորմացիայի արժեզրկում · մտածողության արժևորում
                     </h3>
-                    <p style={{ fontSize: "0.88rem", color: "#94a3b8", margin: 0, lineHeight: 1.5, maxWidth: "340px" }}>
+                    <p style={{ fontSize: "1rem", color: "#94a3b8", margin: 0, lineHeight: 1.5, maxWidth: "400px" }}>
                       AI դարաշրջանում «զրոյական արժեք» է դառնում զուտ տեղեկությունը, իսկ սինթեզն ու պաշտպանված խոսքը՝ գլխավոր արժույթը։
                     </p>
                   </div>
                   <div style={{ display: "flex", gap: "10px", flexShrink: 0 }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "0.85rem", color: "#94a3b8" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "0.9rem", color: "#94a3b8" }}>
                       <div style={{ width: 10, height: 10, borderRadius: "50%", background: "#ef4444" }}/> Ինֆորմացիա
                     </div>
-                    <div style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "0.85rem", color: "#94a3b8" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "0.9rem", color: "#94a3b8" }}>
                       <div style={{ width: 10, height: 10, borderRadius: "50%", background: "#10b981" }}/> Կոգնիտիվ սինթեզ
                     </div>
                   </div>
@@ -212,7 +226,7 @@ export default function LandingPage() {
             </FadeIn>
 
             <FadeIn x={30} delay={0.4}>
-              <PitchQuote>
+              <PitchQuote style={{ background: "none", border: "none", boxShadow: "none", backdropFilter: "none" }}>
                 «Բարև ձեզ։ Որպեսզի հասկանանք, թե ինչ պրոդուկտ է պետք կառուցել այսօր, պետք է նայել 10 տարի առաջ։ Առաջիկա տասնամյակում Արհեստական Բանականությունը գեներացնելու է ցանկացած տեքստ, կոդ կամ գրաֆիկ՝ <strong style={{color:"white"}}>զրոյական ծախսով</strong>։ Հետևաբար, զուտ ինֆորմացիայի և գրավոր առաջադրանքների վրա հիմնված կրթությունը դառնում է անպիտան։<br/><br/>
                 Վաղվա աշխարհում միակ արժեքավոր հմտությունը լինելու է <strong style={{color:"#a855f7"}}>մարդու կոգնիտիվ սինթեզը և բանավոր արգումենտացիան</strong>։ Մենք ներկայացնում ենք Mentoria AI-ը՝ նոր սերնդի վերլուծական ենթակառուցվածք, որը նախագծված է հենց առաջիկա 10 տարիների մարտահրավերների համար»։
               </PitchQuote>
@@ -248,12 +262,11 @@ export default function LandingPage() {
             </FadeIn>
 
             <FadeIn x={30} delay={0.2}>
-              <motion.div 
-                whileHover={{ scale: 1.02 }}
+              <div 
                 style={{ 
-                  background: "linear-gradient(180deg, rgba(30,41,59,0.5) 0%, rgba(15,23,42,0.8) 100%)", 
+                  background: "transparent", 
                   borderRadius: "32px", padding: "40px", height: "500px", position: "relative",
-                  border: "1px solid rgba(255,255,255,0.05)", boxShadow: "0 30px 60px rgba(0,0,0,0.5)"
+                  border: "none", boxShadow: "none"
                 }}>
                 <div style={{ position: "absolute", inset: 0, background: "radial-gradient(circle at 50% 50%, rgba(99,102,241,0.05) 0%, transparent 60%)", pointerEvents: "none" }} />
                 
@@ -302,7 +315,7 @@ export default function LandingPage() {
                     <div style={{ fontSize: "0.75rem", opacity: 0.85, lineHeight: 1.35 }}>Առաջադեմ · ձանձրույթ միջին տեմպով</div>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             </FadeIn>
 
           </div>
@@ -365,12 +378,11 @@ export default function LandingPage() {
                { icon: <Mic size={40} color="#10b981" />, title: "Voice Defense", desc: "Ստուգում բանավոր խոսքի և արգումենտացիայի միջոցով վերջնական փուլում: Ապացուցիր խոսքով:" }
              ].map((step, idx) => (
                <motion.div key={idx} variants={{ hidden: { opacity: 0, y: 50 }, show: { opacity: 1, y: 0, transition: { duration: 0.6 } } }}>
-                 <motion.div 
-                    whileHover={{ y: -10, scale: 1.02, boxShadow: "0 30px 60px rgba(0,0,0,0.4)" }}
+                 <div 
                     style={{ 
                       padding: "50px 40px", height: "100%", textAlign: "center", position: "relative", overflow: "hidden",
-                      background: "rgba(30,41,59,0.4)", borderRadius: "32px", border: "1px solid rgba(255,255,255,0.05)",
-                      backdropFilter: "blur(12px)"
+                      background: "transparent", borderRadius: "32px", border: "none",
+                      backdropFilter: "none"
                     }}>
                     <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 30, ease: "linear" }}
                       style={{ position: "absolute", top: -30, right: -30, opacity: 0.05, transform: "scale(3)" }}>
@@ -382,7 +394,7 @@ export default function LandingPage() {
                     </div>
                     <h3 style={{ fontSize: "1.6rem", marginBottom: "20px", fontWeight: 700, color: "#f8fafc" }}>{step.title}</h3>
                     <p style={{ color: "#94a3b8", fontSize: "1.1rem", lineHeight: 1.7 }}>{step.desc}</p>
-                 </motion.div>
+                 </div>
                </motion.div>
              ))}
           </motion.div>
@@ -413,12 +425,11 @@ export default function LandingPage() {
             </FadeIn>
 
             <FadeIn x={30} delay={0.2}>
-              <motion.div 
-                whileHover={{ scale: 1.02 }}
+              <div 
                 style={{ 
                   borderRadius: "40px", padding: "60px", position: "relative", overflow: "hidden",
-                  background: "linear-gradient(135deg, rgba(30,41,59,0.8) 0%, rgba(15,23,42,0.9) 100%)",
-                  border: "1px solid rgba(139,92,246,0.2)", boxShadow: "0 40px 80px rgba(0,0,0,0.6)"
+                  background: "transparent",
+                  border: "none", boxShadow: "none"
                 }}>
                 
                 {/* Glowing mic backdrop */}
@@ -452,7 +463,7 @@ export default function LandingPage() {
                     ))}
                   </div>
                 </div>
-              </motion.div>
+              </div>
             </FadeIn>
 
           </div>
@@ -487,13 +498,12 @@ export default function LandingPage() {
             
             {/* Student Dashboard Card */}
             <FadeIn x={-20} delay={0.4}>
-              <motion.div 
-                whileHover={{ scale: 1.02, y: -5 }}
+              <div 
                 style={{ 
-                  background: "rgba(15,23,42,0.6)", borderRadius: "32px", padding: "40px", 
-                  borderTop: "4px solid #3b82f6", borderLeft: "1px solid rgba(255,255,255,0.05)",
-                  borderRight: "1px solid rgba(255,255,255,0.05)", borderBottom: "1px solid rgba(255,255,255,0.05)",
-                  boxShadow: "0 20px 40px rgba(0,0,0,0.3)", position: "relative", overflow: "hidden"
+                  background: "transparent", borderRadius: "32px", padding: "40px", 
+                  borderTop: "4px solid #3b82f6", borderLeft: "none",
+                  borderRight: "none", borderBottom: "none",
+                  boxShadow: "none", position: "relative", overflow: "hidden"
                 }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "40px" }}>
                   <div>
@@ -522,18 +532,17 @@ export default function LandingPage() {
                      </div>
                    </div>
                 </div>
-              </motion.div>
+              </div>
             </FadeIn>
 
             {/* Teacher Dashboard Card */}
             <FadeIn x={20} delay={0.6}>
-              <motion.div 
-                whileHover={{ scale: 1.02, y: -5 }}
+              <div 
                 style={{ 
-                  background: "rgba(15,23,42,0.6)", borderRadius: "32px", padding: "40px", 
-                  borderTop: "4px solid #f59e0b", borderLeft: "1px solid rgba(255,255,255,0.05)",
-                  borderRight: "1px solid rgba(255,255,255,0.05)", borderBottom: "1px solid rgba(255,255,255,0.05)",
-                  boxShadow: "0 20px 40px rgba(0,0,0,0.3)", position: "relative", overflow: "hidden"
+                  background: "transparent", borderRadius: "32px", padding: "40px", 
+                  borderTop: "4px solid #f59e0b", borderLeft: "none",
+                  borderRight: "none", borderBottom: "none",
+                  boxShadow: "none", position: "relative", overflow: "hidden"
                 }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "40px" }}>
                   <div>
@@ -561,7 +570,7 @@ export default function LandingPage() {
                      </div>
                    </div>
                 </div>
-              </motion.div>
+              </div>
             </FadeIn>
 
           </div>
@@ -598,9 +607,11 @@ export default function LandingPage() {
             style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))", gap: "30px" }}>
             
             <motion.div variants={staggerItem}>
-              <motion.div 
-                whileHover={{ y: -15, scale: 1.03, boxShadow: "0 40px 80px rgba(239, 68, 68, 0.2)" }}
-                style={{ background: "rgba(30,41,59,0.4)", borderRadius: "32px", padding: "50px", height: "100%", borderTop: "6px solid #ef4444", position: "relative", backdropFilter: "blur(12px)", borderLeft: "1px solid rgba(255,255,255,0.05)", borderRight: "1px solid rgba(255,255,255,0.05)" }}>
+              <div 
+                style={{ 
+                  background: "transparent", borderRadius: "32px", padding: "50px", height: "100%", 
+                  borderTop: "6px solid #ef4444", position: "relative", borderLeft: "none", borderRight: "none" 
+                }}>
                 <div style={{ position: "absolute", top: -20, right: 20, fontSize: "6rem", opacity: 0.05, fontWeight: 900, fontStyle: "italic" }}>1</div>
                 <motion.div animate={{ rotate: [0, 15, -15, 0] }} transition={{ repeat: Infinity, duration: 4 }}>
                   <Sparkles size={50} color="#ef4444" style={{ marginBottom: "24px" }} />
@@ -609,13 +620,15 @@ export default function LandingPage() {
                 <p style={{ color: "#94a3b8", lineHeight: 1.7, fontSize: "1.1rem" }}>
                   Ֆինանսավորվում է CSR ֆոնդերից: Օրինակ՝ <strong style={{color:"white"}}>Coca-Cola</strong>-ի նման կազմակերպություններից, որոնք էքզիստենցիալ շահագրգռված են ապագայի որակյալ, մտածող և սինթեզող աշխատուժով։
                 </p>
-              </motion.div>
+              </div>
             </motion.div>
 
             <motion.div variants={staggerItem}>
-              <motion.div 
-                whileHover={{ y: -15, scale: 1.03, boxShadow: "0 40px 80px rgba(59, 130, 246, 0.2)" }}
-                style={{ background: "rgba(30,41,59,0.4)", borderRadius: "32px", padding: "50px", height: "100%", borderTop: "6px solid #3b82f6", position: "relative", backdropFilter: "blur(12px)", borderLeft: "1px solid rgba(255,255,255,0.05)", borderRight: "1px solid rgba(255,255,255,0.05)" }}>
+              <div 
+                style={{ 
+                  background: "transparent", borderRadius: "32px", padding: "50px", height: "100%", 
+                  borderTop: "6px solid #3b82f6", position: "relative", borderLeft: "none", borderRight: "none" 
+                }}>
                 <div style={{ position: "absolute", top: -20, right: 20, fontSize: "6rem", opacity: 0.05, fontWeight: 900, fontStyle: "italic" }}>2</div>
                 <motion.div animate={{ y: [0, -8, 0] }} transition={{ repeat: Infinity, duration: 3 }}>
                   <Landmark size={50} color="#3b82f6" style={{ marginBottom: "24px" }} />
@@ -624,13 +637,15 @@ export default function LandingPage() {
                 <p style={{ color: "#94a3b8", lineHeight: 1.7, fontSize: "1.1rem" }}>
                   Համակարգի տրամադրում ԿԳՄՍՆ-ին կամ ազգային կրթական ինստիտուտներին որպես հանրային անվճար թվային ենթակառուցվածք՝ ազգային մակարդակով որոշումներ կայացնելու համար (Data-driven policymaking)։
                 </p>
-              </motion.div>
+              </div>
             </motion.div>
 
             <motion.div variants={staggerItem}>
-              <motion.div 
-                whileHover={{ y: -15, scale: 1.03, boxShadow: "0 40px 80px rgba(16, 185, 129, 0.2)" }}
-                style={{ background: "rgba(30,41,59,0.4)", borderRadius: "32px", padding: "50px", height: "100%", borderTop: "6px solid #10b981", position: "relative", backdropFilter: "blur(12px)", borderLeft: "1px solid rgba(255,255,255,0.05)", borderRight: "1px solid rgba(255,255,255,0.05)" }}>
+              <div 
+                style={{ 
+                  background: "transparent", borderRadius: "32px", padding: "50px", height: "100%", 
+                  borderTop: "6px solid #10b981", position: "relative", borderLeft: "none", borderRight: "none" 
+                }}>
                 <div style={{ position: "absolute", top: -20, right: 20, fontSize: "6rem", opacity: 0.05, fontWeight: 900, fontStyle: "italic" }}>3</div>
                 <motion.div animate={{ scale: [1, 1.15, 1] }} transition={{ repeat: Infinity, duration: 3.5 }}>
                   <Building2 size={50} color="#10b981" style={{ marginBottom: "24px" }} />
@@ -639,7 +654,7 @@ export default function LandingPage() {
                 <p style={{ color: "#94a3b8", lineHeight: 1.7, fontSize: "1.1rem" }}>
                   Վճարովի պրեմիում անալիտիկա մասնավոր և միջազգային դպրոցների համար, որոնք կգնեն մեր հարթակը (Dashboard)՝ իրենց ուսուցիչների արդյունավետությունը բազմապատկելու համար։
                 </p>
-              </motion.div>
+              </div>
             </motion.div>
 
           </motion.div>
@@ -677,16 +692,15 @@ export default function LandingPage() {
           </FadeIn>
 
           <FadeIn delay={0.2} y={50}>
-            <motion.div 
-              whileHover={{ boxShadow: "0 40px 80px rgba(0,0,0,0.8)", scale: 1.02 }}
+            <div 
               style={{ 
-                background: "linear-gradient(135deg, rgba(30,41,59,0.8), rgba(15,23,42,0.9))", 
-                border: "1px solid rgba(168,85,247,0.3)", borderRadius: "40px", padding: "60px", 
-                backdropFilter: "blur(20px)", boxShadow: "0 30px 60px rgba(0,0,0,0.6)", transition: "all 0.5s" 
+                background: "transparent", 
+                border: "none", borderRadius: "40px", padding: "60px", 
+                backdropFilter: "none", boxShadow: "none"
               }}>
-              <p style={{ fontSize: "1.4rem", lineHeight: 1.9, textAlign: "left", marginBottom: "50px", color: "#f8fafc", fontWeight: 300, letterSpacing: "0.2px" }}>
+              <p style={{ fontSize: "1.8rem", lineHeight: 1.9, textAlign: "left", marginBottom: "50px", color: "#f8fafc", fontWeight: 300, letterSpacing: "0.2px" }}>
                  «Դա կոգնիտիվ ենթակառուցվածք է:<br/><br/>
-                 Մենք վերացնում ենք <strong style={{color:"#ef4444", fontWeight: 700}}>«միջին աշակերտի»</strong> սինդրոմը: Որովհետև ապագայում, երբ արհեստական բանականությունը կկարողանա անել գրեթե ամեն ինչ, միակ բանը, որ մեզ կտարբերի մեքենայից՝ <strong style={{color:"#a855f7", fontSize:"1.5rem", fontWeight: 700}}>բարդ խնդիրներ վերլուծելու և մեր սեփական միտքը պաշտպանելու կարողությունն է</strong>:<br/><br/><span style={{fontStyle:"italic", color:"#94a3b8"}}>Շնորհակալություն։</span>»
+                 Մենք վերացնում ենք <strong style={{color:"#ef4444", fontWeight: 700}}>«միջին աշակերտի»</strong> սինդրոմը: Որովհետև ապագայում, երբ արհեստական բանականությունը կկարողանա անել գրեթե ամեն ինչ, միակ բանը, որ մեզ կտարբերի մեքենայից՝ <strong style={{color:"#a855f7", fontSize:"1.8rem", fontWeight: 700}}>բարդ խնդիրներ վերլուծելու և մեր սեփական միտքը պաշտպանելու կարողությունն է</strong>:<br/><br/><span style={{fontStyle:"italic", color:"#94a3b8"}}>Շնորհակալություն։</span>»
               </p>
 
               <div style={{ display: "flex", justifyContent: "center", gap: "20px" }}>
@@ -704,7 +718,7 @@ export default function LandingPage() {
                   <Brain size={28} /> Մտնել Դեմո<motion.div animate={{ x: [0, 8, 0] }} transition={{ repeat: Infinity, duration: 1.5 }}><ArrowRight size={28} /></motion.div>
                 </motion.button>
               </div>
-            </motion.div>
+            </div>
           </FadeIn>
         </div>
       </section>
