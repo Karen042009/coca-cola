@@ -13,8 +13,8 @@ export default function SocraticRoom() {
   
   const onComplete = () => setShowVoiceModal(true);
   
-  const { topicId } = useParams();
-  const content = getTopicContent(topicId);
+  const { subjectId, topicId } = useParams();
+  const content = getTopicContent(subjectId, topicId);
 
   // Initialize the chat dynamically if empty or changed logic
   React.useEffect(() => {

@@ -322,11 +322,11 @@ export default function LandingPage() {
                 <h3 style={{ fontSize: "1.8rem", fontWeight: 700, marginBottom: "16px" }}>Verbal Defense Protocol</h3>
                 <p style={{ color: "#94a3b8", marginBottom: "30px" }}>Անհնար է դարձնում արտագրելը և ձևավորում է աշակերտի Կոգնիտիվ Պրոֆիլը (Cognitive Profile):</p>
                 <div style={{ display: "flex", gap: "8px", justifyContent: "center" }}>
-                   {[...Array(12)].map((_, i) => (
+                    {[...Array(12)].map((_, i) => (
                       <motion.div 
                         key={i}
                         animate={{ height: [8, 30, 8] }}
-                        transition={{ repeat: Infinity, duration: 0.5 + Math.random(), ease: "easeInOut" }}
+                        transition={{ repeat: Infinity, duration: 0.5 + (i % 5) * 0.2, ease: "easeInOut" }}
                         style={{ width: 4, background: "#a855f7", borderRadius: 2 }}
                       />
                    ))}

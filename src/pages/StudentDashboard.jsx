@@ -3,11 +3,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import { CheckCircle2, Lock, Timer, GitMerge, ChevronLeft } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
 import { translations, t } from "../i18n/translations";
+import { getTopicContent } from "../data/mockContent";
 
 export default function StudentDashboard() {
   const navigate = useNavigate();
   const { subjectId, topicId } = useParams();
   const { lang } = useLanguage();
+  const content = getTopicContent(subjectId, topicId);
   
   // Fake state simulation for the topic
   const status = {
@@ -68,8 +70,11 @@ export default function StudentDashboard() {
       </button>
 
       <div style={{ textAlign: "center", marginBottom: "24px" }}>
-        <h2 className="text-gradient">{t(translations.dashboard.knowledge, lang)}</h2>
-        <p>{topicId || 'Dynamics'} • {t(translations.dashboard.progress, lang)}</p>
+        <h2 className="text-gradient" style={{ fontSize: '2rem' }}>{content.courseTitle || topicId}</h2>
+        <p style={{ fontSize: '1.1rem', color: '#cbd5e1' }}>{content.emoji} {content.theoryTitle}</p>
+        <div style={{ display: 'inline-block', marginTop: '16px', padding: '6px 16px', background: 'rgba(99, 102, 241, 0.1)', border: '1px solid var(--primary)', borderRadius: '100px', fontSize: '0.85rem', color: 'var(--primary)', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '1px' }}>
+          {lang === 'hy' ? 'Ուսուցման 4-փուլային ցիկլ' : lang === 'ru' ? '4-фазный цикл обучения' : '4-Phase Learning Cycle'}
+        </div>
       </div>
 
       <div
@@ -199,11 +204,11 @@ export default function StudentDashboard() {
                   const isAccessible = status[node.statusKey] === 'in_progress' || status[node.statusKey] === 'done';
                   
                   if (node.statusKey === 'socratic' && isAccessible) {
-                    navigate(`/socratic/${topicId || 'dynamics'}`);
+                    navigate(`/socratic/${subjectId || 'physics'}/${topicId || 'dynamics'}`);
                   } else if (node.statusKey === 'theory' && isAccessible) {
-                    navigate(`/theory/${topicId || 'dynamics'}`);
+                    navigate(`/theory/${subjectId || 'physics'}/${topicId || 'dynamics'}`);
                   } else if (node.statusKey === 'practice' && isAccessible) {
-                    navigate(`/practice/${topicId || 'dynamics'}`);
+                    navigate(`/practice/${subjectId || 'physics'}/${topicId || 'dynamics'}`);
                   } else if (status[node.statusKey] === "locked") {
                     alert(t(translations.dashboard.lockAlert, lang));
                   }

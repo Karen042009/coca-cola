@@ -260,10 +260,13 @@ export const translations = {
   practice: {
     backBtn:      { hy: 'Վերադառնալ', en: 'Back', ru: 'Назад' },
     title:        { hy: '🧠 Գործնական թեստ', en: '🧠 Practice Test', ru: '🧠 Практический тест' },
+    subTitle:     { hy: 'Կիրառիր սովորածդ տեսությունը պրակտիկայում', en: 'Apply the theory you learned in practice', ru: 'Примените изученную теорию на практике' },
     question:     { hy: 'Հարցը', en: 'Question', ru: 'Вопрос' },
     submit:       { hy: 'Հաստատել', en: 'Submit', ru: 'Отправить' },
     correct:      { hy: '✅ Ճիշտ է:', en: '✅ Correct!', ru: '✅ Верно!' },
     incorrect:    { hy: '❌ Սխալ է', en: '❌ Incorrect', ru: '❌ Неверно' },
+    explanationLabel: { hy: 'AI Բացատրություն', en: 'AI Explanation', ru: 'AI Объяснение' },
+    earnedXp:     { hy: 'Դուք վաստակեցիք', en: 'You earned', ru: 'Вы заработали' },
     backToDash:   { hy: 'Վերադառնալ Գիտելիքի ծառ', en: 'Back to Knowledge Tree', ru: 'К дереву знаний' },
     nextTopic:    { hy: 'Հաջորդ թեման', en: 'Next Topic', ru: 'Следующая тема' },
   },

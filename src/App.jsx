@@ -27,10 +27,10 @@ export default function App() {
           <Route path="/student" element={<SubjectsPage />} />
           <Route path="/student/:subjectId" element={<TopicsPage />} />
           <Route path="/student/:subjectId/:topicId" element={<StudentDashboard />} />
-          <Route path="/theory/:topicId" element={<TheoryPage />} />
-          <Route path="/practice/:topicId" element={<PracticePage />} />
+          <Route path="/theory/:subjectId/:topicId" element={<TheoryPage />} />
+          <Route path="/practice/:subjectId/:topicId" element={<PracticePage />} />
           <Route path="/profile" element={<ProfilePage />} />
-          <Route path="/socratic/:topicId" element={<SocraticRoom />} />
+          <Route path="/socratic/:subjectId/:topicId" element={<SocraticRoom />} />
           <Route path="/analytics" element={<AnalyticsDashboard />} />
         </Routes>
       </main>

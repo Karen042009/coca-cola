@@ -15,8 +15,10 @@ export default function VoiceModal({ onClose, onSuccess, validated }) {
   const typingIntervalRef = useRef(null);
   const navigate = useNavigate();
 
-  const topicId = window.location.pathname.split('/').pop() || 'dynamics';
-  const content = getTopicContent(topicId);
+  const pathParts = window.location.pathname.split('/').filter(Boolean);
+  const topicId = pathParts.length > 0 ? pathParts[pathParts.length - 1] : 'dynamics';
+  const subjectId = pathParts.length > 1 ? pathParts[pathParts.length - 2] : 'physics';
+  const content = getTopicContent(subjectId, topicId);
 
   const handleStartRecording = () => {
     setRecording(true);

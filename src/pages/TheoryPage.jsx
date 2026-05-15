@@ -7,9 +7,9 @@ import { translations, t } from '../i18n/translations';
 
 export default function TheoryPage() {
   const navigate = useNavigate();
-  const { topicId } = useParams();
+  const { subjectId, topicId } = useParams();
   const { lang } = useLanguage();
-  const content = getTopicContent(topicId);
+  const content = getTopicContent(subjectId, topicId);
   const [completed, setCompleted] = useState(false);
 
   return (
